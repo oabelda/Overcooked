@@ -1,0 +1,41 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+ScriptAssemblies/
+
+# Builds
+[Bb]uild/
+[Bb]uilds/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Unity Package Manager
+*.unitypackage
+
+# Visual Studio / Rider
+.vs/
+.vscode/
+*.csproj
+*.sln
+*.user
+*.pidb
+*.unityproj
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.suo
+*.tmp
+*.tlog
+*.cache
+
+# Logs
+*.log
