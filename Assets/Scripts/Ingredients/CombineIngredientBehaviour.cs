@@ -20,8 +20,6 @@ public class CombineIngredientBehaviour : MonoBehaviour
 
             newIngredient.SetParent(parent);
 
-            Destroy(this.gameObject);
-            Destroy(other.gameObject);
             return true;
         }
         else
