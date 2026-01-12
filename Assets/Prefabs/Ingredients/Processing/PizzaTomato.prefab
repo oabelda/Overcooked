@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &2907112260594370729
+--- !u!1001 &3022441713847427810
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -9222600047553949360, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58,31 +58,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
       propertyPath: m_Name
-      value: PizzaTomatoCheese
+      value: PizzaTomato
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -9222600047553949360, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1536871170792717015}
+      addedObject: {fileID: 2396213807875802775}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5727915431495623229}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1388331876812434941}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8952251953843427396}
   m_SourcePrefab: {fileID: 100100000, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
---- !u!1 &2637221396339766776 stripped
+--- !u!1 &2679843436667854771 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
-  m_PrefabInstance: {fileID: 2907112260594370729}
+  m_PrefabInstance: {fileID: 3022441713847427810}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1536871170792717015
+--- !u!114 &2396213807875802775
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2637221396339766776}
+  m_GameObject: {fileID: 2679843436667854771}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4319f3a42046bd4288e85fb888bbd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
-  name: pizzaTomatoCheese
+  name: pizzaTomato
+--- !u!114 &5727915431495623229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2679843436667854771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d9a81402ee6e1848b2ed69e629beb2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombineIngredientBehaviour
+  other: {fileID: 4295343192556389489, guid: 60214cfba26c5a34c9e07fa6c0d8b23d, type: 3}
+  result: {fileID: 1536871170792717015, guid: 8ea47bd47654d424e904f83337289b6a, type: 3}
+--- !u!114 &1388331876812434941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2679843436667854771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d9a81402ee6e1848b2ed69e629beb2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombineIngredientBehaviour
+  other: {fileID: 1131064296869915150, guid: f311ba28401a6b5459cfb529bb31db00, type: 3}
+  result: {fileID: 133439675683614530, guid: 87d55b33502fba04eb26e9283f955977, type: 3}
+--- !u!114 &-8952251953843427396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2679843436667854771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d9a81402ee6e1848b2ed69e629beb2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombineIngredientBehaviour
+  other: {fileID: 4841703994986956995, guid: 782a7b955dc007f4fb590946d86a6e8a, type: 3}
+  result: {fileID: 4741960111799614212, guid: fa7780053a5e56a41a71ea000f49ccba, type: 3}

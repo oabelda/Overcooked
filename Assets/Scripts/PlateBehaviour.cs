@@ -11,6 +11,7 @@ public class PlateBehaviour : MonoBehaviour, IPickableParentBehaviour, ICombinab
     void Start()
     {
         platePickable = GetComponent<PickableItemBehaviour>();
+        platePickable.SetParent(this.transform.parent?.GetComponentInParent<IPickableParentBehaviour>());
     }
 
     public bool Combine(PickableItemBehaviour other, IPickableParentBehaviour parent)

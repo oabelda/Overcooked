@@ -14,7 +14,18 @@ public class BinTrashBehaviour : InteractableBehaviour
 
     public override void Place(PickableItemBehaviour dropped)
     {
-        dropped.DestroyItem();
+        PlateBehaviour plate = dropped.GetComponent<PlateBehaviour>();
+
+        if (plate)
+        {
+            if (!plate.HasItem()) return;
+            
+            plate.GetItem().DestroyItem();
+        }
+        else
+        {
+            dropped.DestroyItem();
+        }
 
         anim.Play();
     }

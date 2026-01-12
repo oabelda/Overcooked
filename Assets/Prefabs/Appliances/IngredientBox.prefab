@@ -83,8 +83,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: IngredientBox
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2223639932434330405, guid: fd782267b35d493448d0fee9f4eff96f, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -330381679295910028, guid: fd782267b35d493448d0fee9f4eff96f, type: 3}
@@ -94,6 +93,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fd782267b35d493448d0fee9f4eff96f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 392687135150393724}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fd782267b35d493448d0fee9f4eff96f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3038159118496838647}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fd782267b35d493448d0fee9f4eff96f, type: 3}
       insertIndex: -1
       addedObject: {fileID: -4073476524807842754}
@@ -124,6 +126,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.3380345, y: 0.8374394, z: 1.0381336}
   m_Center: {x: 0, y: 0.41872045, z: 2.1508809e-11}
+--- !u!111 &3038159118496838647
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4556618356344944363}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: -623603649343465320, guid: fd782267b35d493448d0fee9f4eff96f, type: 3}
+  m_Animations:
+  - {fileID: -623603649343465320, guid: fd782267b35d493448d0fee9f4eff96f, type: 3}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!114 &-4073476524807842754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientBoxBehaviour
   itemPlacePoint: {fileID: 3128106833759353001}
-  activeColor: {r: 0, g: 0, b: 0, a: 0}
+  activeColor: {r: 0.6792453, g: 0.4285804, b: 0.37486652, a: 1}
   renderer: {fileID: 0}
   ingredient: {fileID: 0}
 --- !u!4 &5230660546851693774 stripped

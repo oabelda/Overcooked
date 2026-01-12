@@ -1,14 +1,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Animation))]
 public class IngredientBoxBehaviour : InteractableBehaviour
 {
     [SerializeField] PickableItemBehaviour ingredient;
+    Animation anim;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
         base.Start();
+        anim = GetComponent<Animation>();
     }
 
     public override void Interact(PlayerInteractBehaviour player, bool isFirst)
@@ -17,14 +20,18 @@ public class IngredientBoxBehaviour : InteractableBehaviour
             // @TODO combine
             return;
 
-        CreateIngredient(player);
+        CreateIngredient().SetParent(player);
     }
 
-    private void CreateIngredient(PlayerInteractBehaviour player)
+    public override PickableItemBehaviour Take()
     {
-        PickableItemBehaviour newIngredient;
-        // ingredient
-        newIngredient = GameObject.Instantiate(ingredient);
-        newIngredient.SetParent(player);
+        return base.Take() ?? CreateIngredient();
+    }
+
+
+    private PickableItemBehaviour CreateIngredient()
+    {
+        anim.Play();
+        return GameObject.Instantiate(ingredient);
     }
 }
