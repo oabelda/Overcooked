@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(PickableItemBehaviour))]
-public class CombineIngredientBehaviour : MonoBehaviour
+public class CombineIngredientBehaviour : MonoBehaviour, ICombinable
 {
     [SerializeField] PickableItemBehaviour other;
     [SerializeField] PickableItemBehaviour result;
@@ -15,8 +15,8 @@ public class CombineIngredientBehaviour : MonoBehaviour
             PickableItemBehaviour newIngredient;
             newIngredient = GameObject.Instantiate(result);
 
-            this.GetComponent<PickableItemBehaviour>().ClearParent();
-            other.ClearParent();
+            this.GetComponent<PickableItemBehaviour>().DestroyItem();
+            other.DestroyItem();
 
             newIngredient.SetParent(parent);
 

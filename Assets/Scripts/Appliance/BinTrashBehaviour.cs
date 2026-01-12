@@ -14,9 +14,7 @@ public class BinTrashBehaviour : InteractableBehaviour
 
     public override void Place(PickableItemBehaviour dropped)
     {
-        dropped.ClearParent();
-
-        GameObject.Destroy(dropped.gameObject);
+        dropped.DestroyItem();
 
         anim.Play();
     }

@@ -11,6 +11,9 @@ public class PickableItemBehaviour : MonoBehaviour
     }
     public void SetParent(IPickableParentBehaviour parent)
     {
+        if (this.parent == parent)
+            return;
+
         if (this.parent != null)
         {
             this.parent.SetItem(null);
@@ -42,5 +45,11 @@ public class PickableItemBehaviour : MonoBehaviour
     public IPickableParentBehaviour GetParent()
     {
         return parent;
+    }
+
+    public void DestroyItem()
+    {
+        ClearParent();
+        Destroy(this.gameObject);
     }
 }

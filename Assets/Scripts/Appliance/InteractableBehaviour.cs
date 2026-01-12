@@ -111,14 +111,14 @@ public class InteractableBehaviour : MonoBehaviour, IPickableParentBehaviour
         PickableItemBehaviour b,
         IPickableParentBehaviour parent)
     {
-        CombineIngredientBehaviour[] aC = a.GetComponents<CombineIngredientBehaviour>();
-        CombineIngredientBehaviour[] bC = b.GetComponents<CombineIngredientBehaviour>();
+        ICombinable[] aC = a.GetComponents<ICombinable>();
+        ICombinable[] bC = b.GetComponents<ICombinable>();
 
         int index;
         index = 0;
         while (index < aC.Length)
         {
-            CombineIngredientBehaviour actual;
+            ICombinable actual;
             actual = aC[index];
 
             if (actual.Combine(b, parent))
@@ -137,7 +137,7 @@ public class InteractableBehaviour : MonoBehaviour, IPickableParentBehaviour
 
         while (index < bC.Length)
         {
-            CombineIngredientBehaviour actual;
+            ICombinable actual;
             actual = bC[index];
             if (actual.Combine(a, parent))
             {

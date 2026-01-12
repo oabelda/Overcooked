@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 540475322491280568}
   - component: {fileID: 1423795153260980618}
   - component: {fileID: 8157747039346156023}
+  - component: {fileID: -988476824112952299}
   m_Layer: 0
   m_Name: TomatoChopped
   m_TagString: Untagged
@@ -62,6 +63,18 @@ MonoBehaviour:
   cookedPrefab: {fileID: 714180416938046447, guid: 778e758e4e6bca84dbc61dd0739c7a7e, type: 3}
   cookingTime: 1
   willBurn: 0
+--- !u!114 &-988476824112952299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451907978070161431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b520e6c4cd6dd2f4db5f61b89eba421d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlateableBehaviour
 --- !u!1001 &8860134986250623703
 PrefabInstance:
   m_ObjectHideFlags: 0

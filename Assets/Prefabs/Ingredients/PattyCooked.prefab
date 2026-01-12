@@ -66,6 +66,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2daf6e1cae3b1d84a81f40c3220e1d1e, type: 3}
       insertIndex: -1
       addedObject: {fileID: -4819654004719203848}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2daf6e1cae3b1d84a81f40c3220e1d1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1049742737044615181}
   m_SourcePrefab: {fileID: 100100000, guid: 2daf6e1cae3b1d84a81f40c3220e1d1e, type: 3}
 --- !u!1 &1167743673234801752 stripped
 GameObject:
@@ -100,3 +103,17 @@ MonoBehaviour:
   cookedPrefab: {fileID: 4489351969552007951, guid: 333819e4f56ad124e8a81df6af999e1b, type: 3}
   cookingTime: 2
   willBurn: 1
+--- !u!114 &-1049742737044615181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167743673234801752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d9a81402ee6e1848b2ed69e629beb2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombineIngredientBehaviour
+  other: {fileID: 8512699403587360182, guid: 9aedd059a9beed341b972f9b944fb100, type: 3}
+  result: {fileID: 8220893791349884188, guid: cf402e1e9c343f34f96474e93fd0d239, type: 3}
