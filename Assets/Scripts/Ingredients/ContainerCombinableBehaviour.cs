@@ -21,7 +21,8 @@ public class ContainerCombinableBehaviour : MonoBehaviour, ICombinable
             ToppingClass combinable;
             combinable = combinables[index];
 
-            if (combinable.GetItem().GetName() == other.GetName())
+            if (combinable.GetItem().GetName() == other.GetName()
+                && !combinable.IsActive())
             {
                 // It can be combine with 'other'
                 DoCombine(combinable, other, parent);
@@ -45,6 +46,29 @@ public class ContainerCombinableBehaviour : MonoBehaviour, ICombinable
         thisItem.SetParent(parent);
     }
 
+    public bool CheckToppings(Order order)
+    {
+        for (int index = 0; index < combinables.Length; ++index)
+        {
+            if (this.combinables[index].IsActive() 
+                != order.GetRequiredTopping(index))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int GetToppingsCount()
+    {
+        return combinables.Length;
+    }
+
+    public string GetToppingName(int index)
+    {
+        return combinables[index].GetItem().GetName();
+    }
+
 }
 
 [Serializable]
@@ -61,5 +85,10 @@ public class ToppingClass
     public void Activate()
     {
         entity.SetActive(true);
+    }
+
+    public bool IsActive()
+    {
+        return entity.activeSelf;
     }
 }

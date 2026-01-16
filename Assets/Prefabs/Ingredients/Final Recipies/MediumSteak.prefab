@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7538789119183724973}
   - component: {fileID: 8090987457877858268}
   - component: {fileID: 989566756151944811}
+  - component: {fileID: 1600969590974799225}
   m_Layer: 0
   m_Name: MediumSteak
   m_TagString: Untagged
@@ -62,6 +63,18 @@ MonoBehaviour:
   cookedPrefab: {fileID: 8586090032437856724, guid: 859c24cdb659ec843bb945a6a1d42d3c, type: 3}
   cookingTime: 2
   willBurn: 0
+--- !u!114 &1600969590974799225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6834902031641565204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b520e6c4cd6dd2f4db5f61b89eba421d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlateableBehaviour
 --- !u!1001 &1967284912432572314
 PrefabInstance:
   m_ObjectHideFlags: 0

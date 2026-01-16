@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7717627556653926657}
   - component: {fileID: 3122743037540230659}
   - component: {fileID: 6550388404267477584}
+  - component: {fileID: -1937483963475158528}
   m_Layer: 0
   m_Name: RareSteak
   m_TagString: Untagged
@@ -62,6 +63,18 @@ MonoBehaviour:
   cookedPrefab: {fileID: 8090987457877858268, guid: 62921ddd3ef56d14c80a6d72fc89dd38, type: 3}
   cookingTime: 2
   willBurn: 0
+--- !u!114 &-1937483963475158528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7311081007222832627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b520e6c4cd6dd2f4db5f61b89eba421d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlateableBehaviour
 --- !u!1001 &1795398385604345551
 PrefabInstance:
   m_ObjectHideFlags: 0

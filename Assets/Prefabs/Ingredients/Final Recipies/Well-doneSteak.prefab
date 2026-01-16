@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 839711350797034011}
   - component: {fileID: 8586090032437856724}
   - component: {fileID: 677159233562011057}
+  - component: {fileID: -6608693325347663249}
   m_Layer: 0
   m_Name: Well-doneSteak
   m_TagString: Untagged
@@ -62,6 +63,18 @@ MonoBehaviour:
   cookedPrefab: {fileID: 6105309794137909468, guid: 25cf52e49d0060c439cfabf53b63efc5, type: 3}
   cookingTime: 10
   willBurn: 1
+--- !u!114 &-6608693325347663249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379724608779757483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b520e6c4cd6dd2f4db5f61b89eba421d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlateableBehaviour
 --- !u!1001 &7226690975264492933
 PrefabInstance:
   m_ObjectHideFlags: 0
