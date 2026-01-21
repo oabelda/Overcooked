@@ -7094,6 +7094,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManagerBehaviour
   menu: {fileID: 11400000, guid: 95aa1f1daf4131c46b76e412d9962f8c, type: 2}
   score: 0
+  maxOrders: 5
+  timeBetweenOrders: 2
 --- !u!4 &1650537371
 Transform:
   m_ObjectHideFlags: 0
