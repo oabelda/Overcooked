@@ -15,23 +15,6 @@ public class PlayerInteractBehaviour : MonoBehaviour, IPickableParentBehaviour
 
     [SerializeField] float interactionDistance;
 
-    void Start()
-    {
-        //playerColor = this.gameObject
-        //    .GetComponent<MeshRenderer>().material.color;
-
-        GameObject playerGameObject;
-        playerGameObject = this.gameObject;
-
-        MeshRenderer playerRender;
-        playerRender = playerGameObject.GetComponent<MeshRenderer>();
-
-        Material playerMaterial;
-        playerMaterial = playerRender.material;
-
-        playerColor = playerMaterial.color;
-    }
-
     void Update()
     {
         HandleFocus();
