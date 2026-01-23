@@ -14,6 +14,8 @@ public class GameManagerBehaviour : MonoBehaviour
     int actualOrdersCount;
     [SerializeField] int timeBetweenOrders;
 
+    [SerializeField] OrdersPanelBehaviour panel;
+
     void Awake()
     {
         if (instance == null)
@@ -29,9 +31,9 @@ public class GameManagerBehaviour : MonoBehaviour
     void Start()
     {
         orders = new Order[maxOrders];
-        orders[0] = menu.GetRandomOrder();
-        actualOrdersCount = 1;
-        Debug.Log(orders[0].GetNameString());
+        actualOrdersCount = 0;
+        AddRandomOrder();
+
         StartCoroutine(OrderManager());
     }
 
@@ -40,18 +42,13 @@ public class GameManagerBehaviour : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(timeBetweenOrders);
-            if (actualOrdersCount < maxOrders)
-            {
-                orders[actualOrdersCount] = menu.GetRandomOrder();
-                Debug.Log(orders[actualOrdersCount].GetNameString());
-                actualOrdersCount += 1;
-            }
+            AddRandomOrder();
         }
     }
 
     public static bool Deliver(PickableItemBehaviour delivered)
     {
-        for (int order = 0; order < instance.orders.Length; ++order)
+        for (int order = 0; order < instance.actualOrdersCount; ++order)
         {
             // They have same name, and there is no container or if there is
             // its "same" container
@@ -63,10 +60,55 @@ public class GameManagerBehaviour : MonoBehaviour
                     )
                 )
             {
+                // Update score
                 ++instance.score;
+
+                // Destroy the order
+                instance.RemoveOrder(order);
+
                 return true;
             }
         }
         return false;
+    }
+
+    public static void AddRandomOrder()
+    {
+        if (instance.actualOrdersCount < instance.maxOrders)
+        {
+            Order newOrder = instance.menu.GetRandomOrder();
+            instance.orders[instance.actualOrdersCount] = newOrder;
+            instance.actualOrdersCount += 1;
+
+            instance.panel.AddOrder(newOrder);
+        }
+    }
+
+    private void RemoveOrder(int index)
+    {
+        // Take out one order
+        --actualOrdersCount;
+
+        // "Move down" next orders
+        for (int i = index; i< actualOrdersCount; ++i)
+        {
+            orders[i] = orders[i+1];
+        }
+
+        // Remove "last" order
+        orders[actualOrdersCount] = null;
+
+        // Show actual orders
+        ShowActualOrders();
+    }
+
+    private void ShowActualOrders()
+    {
+        string message = "Los pedidos actuales son: ";
+        for (int i = 0; i < actualOrdersCount; ++i)
+        {
+            message += "\n\t" + i + ": " + orders[i].GetNameString();
+        }
+        Debug.Log(message);
     }
 }
