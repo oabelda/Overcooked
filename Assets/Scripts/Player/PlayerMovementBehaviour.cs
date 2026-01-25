@@ -32,7 +32,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
         
         // If needed, change the direction to look at
         // == !=
-        if (moveDirection.sqrMagnitude != 0)
+        if (moveDirection.sqrMagnitude > 0.001f)
         {
             LookAt(moveDirection);
         }
