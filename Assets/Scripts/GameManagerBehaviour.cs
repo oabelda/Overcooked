@@ -100,6 +100,8 @@ public class GameManagerBehaviour : MonoBehaviour
 
         // Show actual orders
         ShowActualOrders();
+
+        panel.RemoveOrder(index);
     }
 
     private void ShowActualOrders()

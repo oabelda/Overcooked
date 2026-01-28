@@ -29,6 +29,17 @@ public class OrdersPanelBehaviour : MonoBehaviour
 
     public void RemoveOrder(int index)
     {
+        int auxIndex = index;
 
+        while (auxIndex+1 < orderPanels.Length && 
+            orderPanels[auxIndex+1].activeSelf) {
+
+            orderPanels[auxIndex].GetComponentInChildren<Text>().text =
+                orderPanels[auxIndex + 1].GetComponentInChildren<Text>().text;
+
+            ++auxIndex;
+        }
+
+        orderPanels[auxIndex].SetActive(false);
     }
 }
