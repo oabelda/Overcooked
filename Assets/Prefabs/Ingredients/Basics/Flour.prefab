@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickableItemBehaviour
   name: flour
+  sprite: {fileID: 21300000, guid: 518909af6b55b2141b53d14fc19d2c67, type: 3}
 --- !u!114 &2321342033999131089
 MonoBehaviour:
   m_ObjectHideFlags: 0

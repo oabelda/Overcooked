@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName="Menu",menuName="ScriptableObject/Menu")]
@@ -18,6 +19,7 @@ public class Order
     PickableItemBehaviour order;
     ContainerCombinableBehaviour ordContainer;
     bool[] toppings;
+    float spawnTime;
 
     public Order(PickableItemBehaviour item)
     {
@@ -32,11 +34,13 @@ public class Order
                 toppings[index] = Random.Range(0, 2) == 1;
             }
         }
+
+        spawnTime = Time.time;
     }
 
     public string GetNameString()
     {
-        string message = "Quiero " + order.GetName();
+        string message = "Quiero " + order.gameObject.name;
         if (ordContainer)
         {
             message += " con ";
@@ -52,9 +56,9 @@ public class Order
         return message;
     }
 
-    public string GetOrderName()
+    public bool CheckOrderInstance(PickableItemBehaviour instance)
     {
-        return order.GetName();
+        return instance.IsInstanceOf(order);
     }
 
     public bool GetRequiredTopping(int index)
@@ -65,5 +69,15 @@ public class Order
     public bool IsCombinable()
     {
         return ordContainer != null;
+    }
+
+    public float GetSpawnTime()
+    {
+        return spawnTime;
+    }
+
+    public float GetDelayTime()
+    {
+        return Time.time - spawnTime;
     }
 }

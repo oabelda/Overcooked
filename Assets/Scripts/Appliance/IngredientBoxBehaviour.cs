@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Animation))]
 public class IngredientBoxBehaviour : InteractableBehaviour
@@ -12,6 +13,7 @@ public class IngredientBoxBehaviour : InteractableBehaviour
     {
         base.Start();
         anim = GetComponent<Animation>();
+        GetComponentInChildren<Image>().sprite = ingredient.GetSprite();
     }
 
     public override void Interact(PlayerInteractBehaviour player, bool isFirst)

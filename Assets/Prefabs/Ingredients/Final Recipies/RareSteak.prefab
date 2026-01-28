@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: rareSteak
+  sprite: {fileID: 21300000, guid: 02b69036db91ad148a013869a3fbe1a2, type: 3}
 --- !u!114 &6550388404267477584
 MonoBehaviour:
   m_ObjectHideFlags: 0

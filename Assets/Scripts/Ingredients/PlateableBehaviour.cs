@@ -14,7 +14,7 @@ public class PlateableBehaviour : MonoBehaviour, ICombinable
     public bool Combine(PickableItemBehaviour other, 
         IPickableParentBehaviour parent)
     {
-        if (other.GetName() == "plate")
+        if (other.name.Contains("Plate"))
         {
             PlateBehaviour plate = other.GetComponent<PlateBehaviour>();
 

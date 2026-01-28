@@ -3,7 +3,8 @@ using UnityEngine;
 public class PickableItemBehaviour : MonoBehaviour
 {
     IPickableParentBehaviour parent;
-    [SerializeField] string name;
+    [SerializeField] new string name;
+    [SerializeField] Sprite sprite;
 
     public string GetName()
     {
@@ -51,5 +52,15 @@ public class PickableItemBehaviour : MonoBehaviour
     {
         ClearParent();
         Destroy(this.gameObject);
+    }
+
+    public bool IsInstanceOf(PickableItemBehaviour prefab)
+    {
+        return this.gameObject.name.Contains(prefab.gameObject.name);
+    }
+
+    public Sprite GetSprite()
+    {
+        return sprite;
     }
 }
