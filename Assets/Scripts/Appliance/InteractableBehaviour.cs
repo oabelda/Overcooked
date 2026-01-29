@@ -8,7 +8,7 @@ public class InteractableBehaviour : MonoBehaviour, IPickableParentBehaviour
 
     Color initColor;
     [SerializeField] Color activeColor;
-    [SerializeField] MeshRenderer renderer;
+    [SerializeField] new MeshRenderer renderer;
     int focusCount;
 
     protected virtual void Start()

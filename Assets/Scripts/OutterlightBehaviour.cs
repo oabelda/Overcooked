@@ -4,7 +4,7 @@ using UnityEngine;
 public class OutterlightBehaviour : MonoBehaviour
 {
     Light mainLight;
-    AudioSource audio;
+    new AudioSource audio;
 
     [SerializeField] float secondsTillFlick;
     [SerializeField] int flickCount;

@@ -9,7 +9,7 @@ public class CombineIngredientBehaviour : MonoBehaviour, ICombinable
 
     public bool Combine(PickableItemBehaviour other, IPickableParentBehaviour parent)
     {
-        if (this.other.GetName() == other.GetName())
+        if (other.IsInstanceOf(this.other))
         {
             // Combine
             PickableItemBehaviour newIngredient;

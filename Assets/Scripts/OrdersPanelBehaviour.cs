@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class OrdersPanelBehaviour : MonoBehaviour
 {
     [SerializeField] GameObject[] orderPanels;
+    [SerializeField] Slider pressureSlider;
 
     public void Start()
     {
@@ -41,5 +42,14 @@ public class OrdersPanelBehaviour : MonoBehaviour
         }
 
         orderPanels[auxIndex].SetActive(false);
+    }
+
+    public void UpdatePressureSlider(float pressure)
+    {
+        if (!pressureSlider) return;
+
+        pressureSlider.value = pressure;
+        pressureSlider.fillRect.GetComponent<Image>().color =
+            Color.Lerp(Color.green, Color.red, pressure);
     }
 }

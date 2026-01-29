@@ -21,7 +21,7 @@ public class ContainerCombinableBehaviour : MonoBehaviour, ICombinable
             ToppingClass combinable;
             combinable = combinables[index];
 
-            if (combinable.GetItem().GetName() == other.GetName()
+            if (other.IsInstanceOf(combinable.GetItem())
                 && !combinable.IsActive())
             {
                 // It can be combine with 'other'
@@ -66,7 +66,7 @@ public class ContainerCombinableBehaviour : MonoBehaviour, ICombinable
 
     public string GetToppingName(int index)
     {
-        return combinables[index].GetItem().GetName();
+        return combinables[index].GetItem().gameObject.name;
     }
 
 }
