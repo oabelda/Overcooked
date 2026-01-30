@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class CookingStationBehaviour : InteractableBehaviour
+public class CookingStationBehaviour : InteractableBehaviour, IProcessor
 {
     [SerializeField] float cookingPower;
 
     CookIngredientBehaviour cookableItem;
+
+    event PickableEvent OnItemPlaced;
+    event FloatEvent OnItemProcessed;
 
     protected override void Start()
     {
@@ -16,6 +19,9 @@ public class CookingStationBehaviour : InteractableBehaviour
     {
         cookableItem.Process(Time.deltaTime
             * cookingPower);
+
+        if (OnItemProcessed != null && cookableItem != null)
+            OnItemProcessed(cookableItem.GetProcess());
     }
 
     public override void SetItem(PickableItemBehaviour item)
@@ -23,6 +29,8 @@ public class CookingStationBehaviour : InteractableBehaviour
         base.SetItem(item);
         cookableItem = placedItem?.GetComponent<CookIngredientBehaviour>();
         ActivateFire(); // this.enable = cookableItem != null;
+        if (OnItemPlaced != null)
+            OnItemPlaced(cookableItem);
     }
 
     private void ActivateFire()
@@ -37,5 +45,15 @@ public class CookingStationBehaviour : InteractableBehaviour
             this.enabled = false;
             ResetColor();
         }
+    }
+
+    public void RegisterOnItemPlaced(PickableEvent a)
+    {
+        OnItemPlaced += a;
+    }
+
+    public void RegisterOnItemProcessed(FloatEvent function)
+    {
+        OnItemProcessed += function;
     }
 }

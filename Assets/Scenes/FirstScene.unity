@@ -1177,6 +1177,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 421533783}
     m_Modifications:
+    - target: {fileID: 1006322220341670876, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006322220341670876, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200405475159356785, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200405475159356785, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200405475159356785, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5801255183697794607, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.9288225
@@ -2259,6 +2279,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 421533783}
     m_Modifications:
+    - target: {fileID: 1006322220341670876, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006322220341670876, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200405475159356785, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200405475159356785, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200405475159356785, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5801255183697794607, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.9288225
@@ -4913,6 +4953,14 @@ PrefabInstance:
       propertyPath: placedIngredient
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2473432823591979198, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2473432823591979198, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6034275954695634565, guid: e20e23ece1effc84d80782520f217677, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.224104
@@ -4956,6 +5004,18 @@ PrefabInstance:
     - target: {fileID: 6410274484055450687, guid: e20e23ece1effc84d80782520f217677, type: 3}
       propertyPath: m_Name
       value: CookingStation3D (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624171213819628592, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624171213819628592, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624171213819628592, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7898,6 +7958,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 421533783}
     m_Modifications:
+    - target: {fileID: 1006322220341670876, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006322220341670876, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200405475159356785, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200405475159356785, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200405475159356785, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5801255183697794607, guid: 2e8627ec7458a5a458f077990e362b5a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.9288225
@@ -8076,6 +8156,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 421533783}
     m_Modifications:
+    - target: {fileID: 2473432823591979198, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2473432823591979198, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6034275954695634565, guid: e20e23ece1effc84d80782520f217677, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.224104
@@ -8119,6 +8207,18 @@ PrefabInstance:
     - target: {fileID: 6410274484055450687, guid: e20e23ece1effc84d80782520f217677, type: 3}
       propertyPath: m_Name
       value: CookingStation3D (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624171213819628592, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624171213819628592, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624171213819628592, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8615,7 +8715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Postprocessing.Runtime::UnityEngine.Rendering.PostProcessing.PostProcessVolume
-  sharedProfile: {fileID: 11400000, guid: 6da5d5e1fcb8cc74c811a302d995d29f, type: 2}
+  sharedProfile: {fileID: 11400000, guid: f2667cb90c3da8047ad5d90c7b3f4e9f, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -8695,7 +8795,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   targetDeliveryTime: 20
   score: 0
-  panel: {fileID: 561221233}
 --- !u!4 &1650537371
 Transform:
   m_ObjectHideFlags: 0
@@ -11524,6 +11623,14 @@ PrefabInstance:
       propertyPath: placedIngredient
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2473432823591979198, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2473432823591979198, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4793197690660809291, guid: e20e23ece1effc84d80782520f217677, type: 3}
       propertyPath: placedIngredient
       value: 
@@ -11571,6 +11678,18 @@ PrefabInstance:
     - target: {fileID: 6410274484055450687, guid: e20e23ece1effc84d80782520f217677, type: 3}
       propertyPath: m_Name
       value: CookingStation3D
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624171213819628592, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624171213819628592, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624171213819628592, guid: e20e23ece1effc84d80782520f217677, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

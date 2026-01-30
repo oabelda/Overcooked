@@ -48,4 +48,9 @@ public class CookIngredientBehaviour : MonoBehaviour, IKitchenProcessing
         // Is not already cooked
         return cookingTime - cookedTime;
     }
+
+    public float GetProcess()
+    {
+        return cookedTime / cookingTime;
+    }
 }

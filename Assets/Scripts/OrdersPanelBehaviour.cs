@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class OrdersPanelBehaviour : MonoBehaviour
@@ -6,12 +7,15 @@ public class OrdersPanelBehaviour : MonoBehaviour
     [SerializeField] GameObject[] orderPanels;
     [SerializeField] Slider pressureSlider;
 
-    public void Start()
+    void Start()
     {
         for (int i = 0; i < orderPanels.Length; ++i)
         {
             orderPanels[i].SetActive(false);
         }
+
+        GameManagerBehaviour.RegisterOnOrderRemoved(RemoveOrder);
+        GameManagerBehaviour.RegisterOnOrderAdded(AddOrder);
     }
 
     public void AddOrder(Order newOrder)
@@ -51,5 +55,10 @@ public class OrdersPanelBehaviour : MonoBehaviour
         pressureSlider.value = pressure;
         pressureSlider.fillRect.GetComponent<Image>().color =
             Color.Lerp(Color.green, Color.red, pressure);
+    }
+
+    public void Test()
+    {
+        Debug.Log("Estamos probando el delegado");
     }
 }

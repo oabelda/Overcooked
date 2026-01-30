@@ -2,12 +2,15 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class MicrowaveBehaviour : InteractableBehaviour
+public class MicrowaveBehaviour : InteractableBehaviour, IProcessor
 {
     Animator anim;
 
     bool isCooking;
     [SerializeField] float cookingTime;
+
+    event PickableEvent OnItemPlaced;
+    event FloatEvent OnItemProcessed;
 
     protected override void Start()
     {
@@ -70,5 +73,15 @@ public class MicrowaveBehaviour : InteractableBehaviour
         // End
         isCooking = false;
         anim.SetBool("cooking", false);
+    }
+
+    public void RegisterOnItemPlaced(PickableEvent a)
+    {
+        OnItemPlaced += a;
+    }
+
+    public void RegisterOnItemProcessed(FloatEvent function)
+    {
+        OnItemProcessed += function;
     }
 }

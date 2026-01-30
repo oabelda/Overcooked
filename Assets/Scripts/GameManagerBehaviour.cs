@@ -3,8 +3,13 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+
 public class GameManagerBehaviour : MonoBehaviour
 {
+    public delegate void NewOrderDelegate(Order newOrder);
+    public delegate void RemoveOrderDelegate(int index);
+
     static GameManagerBehaviour instance;
 
     [Header("Orders")]
@@ -35,8 +40,8 @@ public class GameManagerBehaviour : MonoBehaviour
     [Header("Score")]
     [SerializeField] int score;
 
-    [Header("UI")]
-    [SerializeField] OrdersPanelBehaviour panel;
+    event NewOrderDelegate OnOrderAdded;
+    event RemoveOrderDelegate OnOrderRemoved;
 
     void Awake()
     {
@@ -63,7 +68,7 @@ public class GameManagerBehaviour : MonoBehaviour
     #region Pressure Methods 
     private void Update()
     {
-        panel.UpdatePressureSlider(pressure);
+        // panel.UpdatePressureSlider(pressure);
 
         if (actualOrdersCount >= maxOrders || spawnLocked) return;
 
@@ -196,7 +201,8 @@ public class GameManagerBehaviour : MonoBehaviour
             instance.orders[instance.actualOrdersCount] = newOrder;
             instance.actualOrdersCount += 1;
 
-            instance.panel.AddOrder(newOrder);
+            if (instance.OnOrderAdded != null)
+                instance.OnOrderAdded(newOrder);
         }
     }
 
@@ -215,7 +221,8 @@ public class GameManagerBehaviour : MonoBehaviour
         orders[actualOrdersCount] = null;
 
         // Show actual orders
-        panel.RemoveOrder(index);
+        if (instance.OnOrderRemoved != null)
+            instance.OnOrderRemoved(index);
 
         // If there is no orders
         if (actualOrdersCount == 0)
@@ -236,5 +243,25 @@ public class GameManagerBehaviour : MonoBehaviour
             message += "\n\t" + i + ": " + orders[i].GetNameString();
         }
         Debug.Log(message);
+    }
+
+    public static void RegisterOnOrderAdded(NewOrderDelegate f)
+    {
+        instance.OnOrderAdded += f;
+    }
+
+    public static void UnregisterOnOrderAdded(NewOrderDelegate f)
+    {
+        instance.OnOrderAdded -= f;
+    }
+
+    public static void RegisterOnOrderRemoved(RemoveOrderDelegate f)
+    {
+        instance.OnOrderRemoved += f;
+    }
+
+    public static void UnregisterOnOrderRemoved(RemoveOrderDelegate f)
+    {
+        instance.OnOrderRemoved -= f;
     }
 }
