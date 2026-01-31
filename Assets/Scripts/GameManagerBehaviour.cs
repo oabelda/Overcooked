@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 public class GameManagerBehaviour : MonoBehaviour
 {
     public delegate void NewOrderDelegate(Order newOrder);
-    public delegate void RemoveOrderDelegate(int index);
 
     static GameManagerBehaviour instance;
 
@@ -41,7 +40,6 @@ public class GameManagerBehaviour : MonoBehaviour
     [SerializeField] int score;
 
     event NewOrderDelegate OnOrderAdded;
-    event RemoveOrderDelegate OnOrderRemoved;
 
     void Awake()
     {
@@ -104,7 +102,7 @@ public class GameManagerBehaviour : MonoBehaviour
         return pressureCuver.Evaluate(Pressure) + eventModifier;
     }
 
-    private void OnOrderDelivered(Order order)
+    private void PressureUpdateOnOrderDelivered(Order order)
     {
         Pressure += 0.1f;
 
@@ -130,7 +128,7 @@ public class GameManagerBehaviour : MonoBehaviour
         pressure = Mathf.Clamp01(pressure);
     }
 
-    private void OnOrderFailed()
+    private void PressureUpdateOnOrderFailed()
     {
         comboCount = 0;
         Pressure -= 0.15f;
@@ -167,19 +165,16 @@ public class GameManagerBehaviour : MonoBehaviour
         {
             // They have same name, and there is no container or if there is
             // its "same" container
-            if (instance.orders[order].CheckOrderInstance(delivered)
-                &&
-                    (!instance.orders[order].IsCombinable() ||
-                    delivered.GetComponent<ContainerCombinableBehaviour>()
-                        .CheckToppings(instance.orders[order])
-                    )
-                )
+            if (instance.orders[order].CheckOrderInstance(delivered))
             {
                 // Update score
                 ++instance.score;
 
                 // Succeed Order Delivered
-                instance.OnOrderDelivered(instance.orders[order]);
+                instance.PressureUpdateOnOrderDelivered(instance.orders[order]);
+
+                // Show actual orders
+                instance.orders[order].Deliver();
 
                 // Destroy the order
                 instance.RemoveOrder(order);
@@ -220,10 +215,6 @@ public class GameManagerBehaviour : MonoBehaviour
         // Remove "last" order
         orders[actualOrdersCount] = null;
 
-        // Show actual orders
-        if (instance.OnOrderRemoved != null)
-            instance.OnOrderRemoved(index);
-
         // If there is no orders
         if (actualOrdersCount == 0)
         {
@@ -235,33 +226,8 @@ public class GameManagerBehaviour : MonoBehaviour
         }
     }
 
-    private void ShowActualOrders()
-    {
-        string message = "Los pedidos actuales son: ";
-        for (int i = 0; i < actualOrdersCount; ++i)
-        {
-            message += "\n\t" + i + ": " + orders[i].GetNameString();
-        }
-        Debug.Log(message);
-    }
-
     public static void RegisterOnOrderAdded(NewOrderDelegate f)
     {
         instance.OnOrderAdded += f;
-    }
-
-    public static void UnregisterOnOrderAdded(NewOrderDelegate f)
-    {
-        instance.OnOrderAdded -= f;
-    }
-
-    public static void RegisterOnOrderRemoved(RemoveOrderDelegate f)
-    {
-        instance.OnOrderRemoved += f;
-    }
-
-    public static void UnregisterOnOrderRemoved(RemoveOrderDelegate f)
-    {
-        instance.OnOrderRemoved -= f;
     }
 }

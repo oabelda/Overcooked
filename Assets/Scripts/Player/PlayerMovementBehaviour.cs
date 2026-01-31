@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Animator))]
 public class PlayerMovementBehaviour : MonoBehaviour
 {
     // Speed atributes
@@ -12,6 +13,13 @@ public class PlayerMovementBehaviour : MonoBehaviour
     [SerializeField] Key backwardKey;
     [SerializeField] Key leftKey;
     [SerializeField] Key rightKey;
+
+    Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -34,7 +42,12 @@ public class PlayerMovementBehaviour : MonoBehaviour
         // == !=
         if (moveDirection.sqrMagnitude > 0.001f)
         {
+            animator.SetBool("Walk", true);
             LookAt(moveDirection);
+        }
+        else
+        {
+            animator.SetBool("Walk", false);
         }
     }
 
