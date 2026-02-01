@@ -73,6 +73,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5622087823298281305}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8118643968484988988}
   m_SourcePrefab: {fileID: 100100000, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
 --- !u!1 &2637221396339766776 stripped
 GameObject:
@@ -92,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: pizzaTomatoCheese
+  sprite: {fileID: 21300000, guid: 9a5621706d6fd0c459e3cf90596dad34, type: 3}
 --- !u!114 &-4425881974116160178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,3 +124,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CombineIngredientBehaviour
   other: {fileID: 1131064296869915150, guid: f311ba28401a6b5459cfb529bb31db00, type: 3}
   result: {fileID: 8177250441945626728, guid: 09455dab526483a4b8f9ace82b7f5f5f, type: 3}
+--- !u!114 &-8118643968484988988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637221396339766776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b520e6c4cd6dd2f4db5f61b89eba421d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlateableBehaviour

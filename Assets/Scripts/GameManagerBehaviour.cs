@@ -7,8 +7,6 @@ using UnityEngine.InputSystem;
 
 public class GameManagerBehaviour : MonoBehaviour
 {
-    public delegate void NewOrderDelegate(Order newOrder);
-
     static GameManagerBehaviour instance;
 
     [Header("Orders")]
@@ -32,14 +30,13 @@ public class GameManagerBehaviour : MonoBehaviour
 
     bool spawnLocked;
     int consecutiveSpawns;
-    [SerializeField] float targetDeliveryTime;
-    float averageDeliveryTime;
+    float avgDelivery;
     int comboCount;
 
     [Header("Score")]
     [SerializeField] int score;
 
-    event NewOrderDelegate OnOrderAdded;
+    event Order.EventOrder OnOrderAdded;
 
     void Awake()
     {
@@ -59,14 +56,23 @@ public class GameManagerBehaviour : MonoBehaviour
         actualOrdersCount = 0;
         comboCount = 0;
         orderTimer = maxDelay;
-        averageDeliveryTime = targetDeliveryTime;
         AddRandomOrder();
+        avgDelivery = 0;
     }
 
-    #region Pressure Methods 
     private void Update()
     {
-        // panel.UpdatePressureSlider(pressure);
+        for (int i = 0; i < actualOrdersCount; ++i)
+        {
+            if (Time.time >= orders[i].GetFailTime())
+            {
+                // Pressure Update On Order Failed
+                comboCount = 0;
+                Pressure -= 0.15f;
+
+                orders[i].Fail();
+            }
+        }
 
         if (actualOrdersCount >= maxOrders || spawnLocked) return;
 
@@ -102,38 +108,7 @@ public class GameManagerBehaviour : MonoBehaviour
         return pressureCuver.Evaluate(Pressure) + eventModifier;
     }
 
-    private void PressureUpdateOnOrderDelivered(Order order)
-    {
-        Pressure += 0.1f;
-
-        float deliveryTime = order.GetDelayTime();
-
-        ++comboCount;
-
-        float speedScore = Mathf.InverseLerp(targetDeliveryTime * 1.5f,
-                                             targetDeliveryTime * 0.5f,
-                                             deliveryTime);
-
-        // Average
-        averageDeliveryTime = Mathf.Lerp(averageDeliveryTime, deliveryTime, 0.2f);
-
-        float avgScore = Mathf.InverseLerp(targetDeliveryTime * 1.5f,
-                                           targetDeliveryTime * 0.7f,
-                                           averageDeliveryTime);
-
-        pressure += comboCount * 0.02f;
-        pressure += speedScore * 0.08f;
-        pressure += avgScore * 0.05f;
-
-        pressure = Mathf.Clamp01(pressure);
-    }
-
-    private void PressureUpdateOnOrderFailed()
-    {
-        comboCount = 0;
-        Pressure -= 0.15f;
-    }
-
+    #region Pressure Events
     public void TriggerRush(int seconds, float eventModifier)
     {
         StartCoroutine(RushEvent(seconds, eventModifier));
@@ -159,7 +134,7 @@ public class GameManagerBehaviour : MonoBehaviour
     }
     #endregion
 
-    public static bool Deliver(PickableItemBehaviour delivered)
+    public static bool TryDeliver(PickableItemBehaviour delivered)
     {
         for (int order = 0; order < instance.actualOrdersCount; ++order)
         {
@@ -167,49 +142,38 @@ public class GameManagerBehaviour : MonoBehaviour
             // its "same" container
             if (instance.orders[order].CheckOrderInstance(delivered))
             {
-                // Update score
-                ++instance.score;
-
-                // Succeed Order Delivered
-                instance.PressureUpdateOnOrderDelivered(instance.orders[order]);
-
-                // Show actual orders
-                instance.orders[order].Deliver();
-
-                // Destroy the order
-                instance.RemoveOrder(order);
-
-                // Delay the next order
-                instance.orderTimer += Random.Range(0.5f, 1.5f);
-
+                instance.Deliver(order);
                 return true;
             }
         }
         return false;
     }
 
-    public static void AddRandomOrder()
+    private void Deliver(int index)
     {
-        if (instance.actualOrdersCount < instance.maxOrders)
-        {
-            Order newOrder = instance.menu.GetRandomOrder();
-            instance.orders[instance.actualOrdersCount] = newOrder;
-            instance.actualOrdersCount += 1;
+        // Raise score and combo count
+        ++score;
 
-            if (instance.OnOrderAdded != null)
-                instance.OnOrderAdded(newOrder);
-        }
-    }
+        // Update pressure
+        float expectedTime = orders[index].GetExpectedTime();
 
-    private void RemoveOrder(int index)
-    {
+        float speedScore = Mathf.InverseLerp(expectedTime * 1.5f, expectedTime * 0.5f, orders[index].GetDeliveryTime());
+
+        avgDelivery = Mathf.Lerp(avgDelivery, (1-speedScore)*2f, 0.2f);
+
+        // Raise pressure (fixed) + (combo) + (speed) + (avgSpeed)
+        Pressure += 0.1f + (comboCount++ * 0.02f) + (speedScore * 0.08f) + (avgDelivery * 0.04f);
+
+        // Show actual orders
+        orders[index].Deliver();
+
         // Take out one order
         --actualOrdersCount;
 
-        // "Move down" next orders
-        for (int i = index; i< actualOrdersCount; ++i)
+        // Destroy the order: "Move down" next orders
+        for (int i = index; i < actualOrdersCount; ++i)
         {
-            orders[i] = orders[i+1];
+            orders[i] = orders[i + 1];
         }
 
         // Remove "last" order
@@ -224,9 +188,27 @@ public class GameManagerBehaviour : MonoBehaviour
             // Get next delay
             orderTimer = Mathf.Lerp(maxDelay, minDelay, GetEffectivePressure()) * eventDelayMultiplier;
         }
+        else
+        {
+            // Delay the next order
+            orderTimer += Random.Range(0.5f, 1.5f);
+        }
     }
 
-    public static void RegisterOnOrderAdded(NewOrderDelegate f)
+    private static void AddRandomOrder()
+    {
+        if (instance.actualOrdersCount < instance.maxOrders)
+        {
+            Order newOrder = instance.menu.GetRandomOrder();
+            instance.orders[instance.actualOrdersCount] = newOrder;
+            instance.actualOrdersCount += 1;
+
+            if (instance.OnOrderAdded != null)
+                instance.OnOrderAdded(newOrder);
+        }
+    }
+
+    public static void RegisterOnOrderAdded(Order.EventOrder f)
     {
         instance.OnOrderAdded += f;
     }

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: tomatoSauce
+  sprite: {fileID: 21300000, guid: be651a3ff3e1e1440bf18f392f7f0c43, type: 3}
 --- !u!1001 &9202085303391591644
 PrefabInstance:
   m_ObjectHideFlags: 0

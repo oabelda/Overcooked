@@ -4,13 +4,12 @@ using UnityEngine.UI;
 public class OrderCardBehaviour : MonoBehaviour
 {
     Order order;
-    Text text;
     Slider timeSlider;
-
+    [SerializeField] Image recipe;
+    [SerializeField] Image[] toppings;
 
     void Start()
     {
-        text = GetComponentInChildren<Text>();
         timeSlider = GetComponentInChildren<Slider>();
 
         gameObject.SetActive(order != null);
@@ -29,7 +28,7 @@ public class OrderCardBehaviour : MonoBehaviour
         if (this.order != null)
         {
             // Visual set the order
-            text.text = order.GetNameString();
+            SetVisuals();
 
             // Link the events
             this.order.OnOrderFailed += Order_OrderFailed;
@@ -47,6 +46,26 @@ public class OrderCardBehaviour : MonoBehaviour
         }
     }
 
+    private void SetVisuals()
+    {
+        recipe.sprite = order.GetSprite();
+
+        var toppingsSprites = order.GetToppingsSprites();
+        int toppingCount = toppingsSprites?.Length ?? 0;
+
+        for (int i = 0; i < this.toppings.Length; ++i)
+        {
+            bool hasTopping = i < toppingCount;
+            this.toppings[i].gameObject.SetActive(hasTopping);
+
+            if (hasTopping)
+            {
+                this.toppings[i].sprite = toppingsSprites[i];
+                
+            }
+        }
+    }
+
     private void Order_OnOrderDelivered(Order order)
     {
         SetOrder(null);
@@ -54,7 +73,7 @@ public class OrderCardBehaviour : MonoBehaviour
 
     private void Order_OrderFailed(Order order)
     {
-        Debug.Log("Se ha fallado este pedido");
+        Debug.Log("Se ha fallado este pedido: " + order.GetNameString());
     }
 
     void Update()

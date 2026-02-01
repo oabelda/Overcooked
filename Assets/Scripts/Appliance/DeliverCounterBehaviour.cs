@@ -19,7 +19,7 @@ public class DeliverCounterBehaviour : InteractableBehaviour
     {
         PlateBehaviour plate = delivered.GetComponent<PlateBehaviour>();
         if (plate && plate.HasItem() 
-            && GameManagerBehaviour.Deliver(plate.GetItem()))
+            && GameManagerBehaviour.TryDeliver(plate.GetItem()))
         {
             return true;
         }

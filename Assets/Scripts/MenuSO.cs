@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -21,8 +22,11 @@ public class Order
     PickableItemBehaviour order;
     ContainerCombinableBehaviour ordContainer;
     bool[] toppings;
-    float spawnTime;
-    float failTime;
+
+    float spawnTime; // Never changes
+    float expectedTime; // Never changes @TODO que dependa de la presión y del plato (suma de tiempos de pasos (cortar, cocinar, etc) + buffers
+    float maxTime; // Never changes @TODO que dependa de la presión y del plato (expected * factorMargen)
+    float failTime; // Changes
 
     public event EventOrder OnOrderFailed;
     public event EventOrder OnOrderDelivered;
@@ -32,7 +36,8 @@ public class Order
         order = item;
         ordContainer = order.GetComponent<ContainerCombinableBehaviour>();
 
-        failTime = 20;
+        expectedTime = 10;
+        maxTime = expectedTime * 2.5f;
 
         if (ordContainer)
         {
@@ -41,17 +46,17 @@ public class Order
             for (int index = 0; index < toppings.Length; ++index)
             {
                 toppings[index] = Random.Range(0, 2) == 1;
-                failTime += toppings[index] ? 10 : 0;
+                maxTime += toppings[index] ? 5 : 0;
             }
         }
 
         spawnTime = Time.time;
-        failTime += spawnTime;
+        failTime = spawnTime + maxTime;
     }
 
     public string GetNameString()
     {
-        string message = "Quiero " + order.gameObject.name;
+        string message = order.gameObject.name;
         if (ordContainer)
         {
             message += " con ";
@@ -67,6 +72,30 @@ public class Order
         return message;
     }
 
+    public Sprite GetSprite()
+    {
+        return order.GetSprite();
+    }
+
+    public Sprite[] GetToppingsSprites()
+    {
+        if (ordContainer)
+        {
+            List<Sprite> sprites = new List<Sprite>();
+
+            for (int i = 0; i < toppings.Length; ++i)
+            {
+                if (toppings[i])
+                {
+                    sprites.Add(ordContainer.GetToppingSprite(i));
+                }
+            }
+            return sprites.ToArray();
+        }
+
+        return null;
+    }
+
     public bool CheckOrderInstance(PickableItemBehaviour checking)
     {
         // They have the same name, adn there is no container or if there is its "same" contaniner
@@ -79,29 +108,36 @@ public class Order
         return toppings[index];
     }
 
-    public bool IsCombinable()
+    private bool IsCombinable()
     {
         return ordContainer != null;
     }
 
-    public float GetSpawnTime()
-    {
-        return spawnTime;
-    }
-
-    public float GetDelayTime()
+    public float GetDeliveryTime()
     {
         return Time.time - spawnTime;
     }
+    public float GetExpectedTime()
+    {
+        return expectedTime;
+    }
+
+    public float GetFailTime() { return  failTime; }
 
     public float GetProgress()
     {
-        Debug.Log("time " + Time.time + " Spw: " + spawnTime + " Fail: " + failTime + " time-spwn " + (Time.time - spawnTime) + " fail-spwn" + (failTime - spawnTime) + " result: " + ((Time.time - spawnTime) / (failTime - spawnTime)));
-        return (Time.time - spawnTime) / (failTime - spawnTime);
+        float remaining = failTime - Time.time;
+        return 1 - (remaining / maxTime);
     }
 
-    internal void Deliver()
+    public void Deliver()
     {
         if (OnOrderDelivered!= null) OnOrderDelivered(this);
+    }
+
+    public void Fail()
+    {
+        failTime = Time.time + maxTime;
+        if (OnOrderFailed != null) OnOrderFailed(this);
     }
 }

@@ -78,3 +78,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: eggCracked
+  sprite: {fileID: 21300000, guid: b466c11f6edab2c468f46351c338b391, type: 3}

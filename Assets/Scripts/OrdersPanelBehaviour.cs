@@ -15,13 +15,10 @@ public class OrdersPanelBehaviour : MonoBehaviour
 
     public void AddOrder(Order newOrder)
     {
-        Debug.Log("Order Added");
         for (int i = 0; i < orders.Length; ++i)
         {
-            Debug.Log(i);
             if (!orders[i].gameObject.activeSelf)
             {
-                Debug.Log("Ready to set");
                 orders[i].SetOrder(newOrder);
                 return;
             }

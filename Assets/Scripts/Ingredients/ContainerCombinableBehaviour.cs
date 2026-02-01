@@ -69,6 +69,11 @@ public class ContainerCombinableBehaviour : MonoBehaviour, ICombinable
         return combinables[index].GetItem().gameObject.name;
     }
 
+    public Sprite GetToppingSprite(int index)
+    {
+        return combinables[index].GetItem().GetSprite();
+    }
+
 }
 
 [Serializable]

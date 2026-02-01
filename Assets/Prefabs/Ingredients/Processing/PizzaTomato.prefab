@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: pizzaTomato
+  sprite: {fileID: 21300000, guid: 9a5621706d6fd0c459e3cf90596dad34, type: 3}
 --- !u!114 &5727915431495623229
 MonoBehaviour:
   m_ObjectHideFlags: 0

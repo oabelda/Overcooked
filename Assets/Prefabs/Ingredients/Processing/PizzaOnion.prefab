@@ -247,6 +247,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8177250441945626728}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -680297960382902980}
   m_SourcePrefab: {fileID: 100100000, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
 --- !u!1 &3740558932387777675 stripped
 GameObject:
@@ -266,6 +269,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: PizzaOnion
+  sprite: {fileID: 21300000, guid: 50ab5773c4b22ed4e926f933fbd7307a, type: 3}
+--- !u!114 &-680297960382902980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3740558932387777675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b520e6c4cd6dd2f4db5f61b89eba421d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlateableBehaviour
 --- !u!4 &4576625732794579501 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 48197698319256567, guid: 211c6566bf66a2949b4afe59cb6ec000, type: 3}
