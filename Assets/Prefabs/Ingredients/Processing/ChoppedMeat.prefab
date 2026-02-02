@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: choppedMeat
-  sprite: {fileID: 21300000, guid: 093a29f1697bab549973f65f29a80208, type: 3}
+  sprite: {fileID: 688824982, guid: 9c4c488e5aff58a4a8aeacdc402306c0, type: 3}
 --- !u!114 &1147024554452995499
 MonoBehaviour:
   m_ObjectHideFlags: 0

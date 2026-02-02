@@ -85,6 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: pattyRaw
+  sprite: {fileID: -1699875890, guid: 9c4c488e5aff58a4a8aeacdc402306c0, type: 3}
 --- !u!114 &4082117094795218494
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: onionChopped
-  sprite: {fileID: 21300000, guid: 4183aae78de9f144d9af7a302bd4f798, type: 3}
+  sprite: {fileID: -1523143931, guid: 9c4c488e5aff58a4a8aeacdc402306c0, type: 3}
 --- !u!1001 &7654466089767686151
 PrefabInstance:
   m_ObjectHideFlags: 0

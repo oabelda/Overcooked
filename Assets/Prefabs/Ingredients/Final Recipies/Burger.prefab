@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: burger
-  sprite: {fileID: 21300000, guid: 0a4e32f2161aa984eb9e7522893c53d3, type: 3}
+  sprite: {fileID: 72658283, guid: 9c4c488e5aff58a4a8aeacdc402306c0, type: 3}
 --- !u!114 &605092260214659522
 MonoBehaviour:
   m_ObjectHideFlags: 0

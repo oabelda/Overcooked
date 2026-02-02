@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: wellDoneSteak
-  sprite: {fileID: 21300000, guid: 2a4f69850f49d314b9db6cdac7ddfbbb, type: 3}
+  sprite: {fileID: 345568791, guid: 9c4c488e5aff58a4a8aeacdc402306c0, type: 3}
 --- !u!114 &677159233562011057
 MonoBehaviour:
   m_ObjectHideFlags: 0

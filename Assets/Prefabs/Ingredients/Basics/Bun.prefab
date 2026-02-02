@@ -78,4 +78,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: bun
-  sprite: {fileID: 21300000, guid: 5f67b63488e453a4fa122414955b82f8, type: 3}
+  sprite: {fileID: -116061740, guid: 9c4c488e5aff58a4a8aeacdc402306c0, type: 3}

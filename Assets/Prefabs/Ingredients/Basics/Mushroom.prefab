@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: mushroom
-  sprite: {fileID: 21300000, guid: f2a48cd69261b6c4b8004267b4461a85, type: 3}
+  sprite: {fileID: -1606207802, guid: 9c4c488e5aff58a4a8aeacdc402306c0, type: 3}
 --- !u!114 &8996134538232269509
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -88,6 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: pattyCooked
+  sprite: {fileID: -1218405027, guid: 9c4c488e5aff58a4a8aeacdc402306c0, type: 3}
 --- !u!114 &-4819654004719203848
 MonoBehaviour:
   m_ObjectHideFlags: 0

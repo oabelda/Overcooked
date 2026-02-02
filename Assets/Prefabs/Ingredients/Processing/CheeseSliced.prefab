@@ -78,4 +78,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpAbleBehaviour
   name: cheeseSliced
-  sprite: {fileID: 21300000, guid: bf9f421013cdb8c4295f06f39a092250, type: 3}
+  sprite: {fileID: -305827610, guid: 0a297d7b73aaec045932df74fe1429c0, type: 3}
