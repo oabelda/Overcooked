@@ -9,6 +9,8 @@ public class GameManagerBehaviour : MonoBehaviour
 {
     static GameManagerBehaviour instance;
 
+    [SerializeField] ScoreManagerBehaviour scoreManager;
+
     [Header("Orders")]
     [SerializeField] MenuSO menu;
     [SerializeField] int maxOrders;
@@ -66,11 +68,15 @@ public class GameManagerBehaviour : MonoBehaviour
         {
             if (Time.time >= orders[i].GetFailTime())
             {
+                scoreManager.RegisterFail();
+
+                orders[i].Fail();
+
                 // Pressure Update On Order Failed
                 comboCount = 0;
                 Pressure -= 0.15f;
 
-                orders[i].Fail();
+
             }
         }
 
@@ -142,6 +148,10 @@ public class GameManagerBehaviour : MonoBehaviour
             // its "same" container
             if (instance.orders[order].CheckOrderInstance(delivered))
             {
+                instance.scoreManager.OnDeliver(
+                    instance.orders[order].GetToppingsCount(), // Ingredients
+                    instance.orders[order].GetRelativeSpeed(), // relativeTime
+                    order == 0); // rightOrder
                 instance.Deliver(order);
                 return true;
             }

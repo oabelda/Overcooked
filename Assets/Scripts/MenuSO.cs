@@ -37,7 +37,6 @@ public class Order
         ordContainer = order.GetComponent<ContainerCombinableBehaviour>();
 
         expectedTime = 10;
-        maxTime = expectedTime * 2.5f;
 
         if (ordContainer)
         {
@@ -46,9 +45,11 @@ public class Order
             for (int index = 0; index < toppings.Length; ++index)
             {
                 toppings[index] = Random.Range(0, 2) == 1;
-                maxTime += toppings[index] ? 5 : 0;
+                expectedTime += toppings[index] ? 5 : 0;
             }
         }
+
+        maxTime = expectedTime * 2.5f;
 
         spawnTime = Time.time;
         failTime = spawnTime + maxTime;
@@ -108,6 +109,22 @@ public class Order
         return toppings[index];
     }
 
+    public int GetToppingsCount()
+    {
+        if (toppings == null)
+            return 0;
+
+        int count = 0;
+        for (int i = 0; i < toppings.Length; ++i)
+        {
+            if (toppings[i])
+            {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
     private bool IsCombinable()
     {
         return ordContainer != null;
@@ -123,6 +140,15 @@ public class Order
     }
 
     public float GetFailTime() { return  failTime; }
+
+    public float GetRelativeSpeed()
+    {
+        float duration = GetDeliveryTime();
+        float quickTime = expectedTime * 0.8f ;
+        float slowTime = expectedTime * 1.2f;
+
+        return Mathf.InverseLerp(slowTime, quickTime, duration);
+    }
 
     public float GetProgress()
     {
