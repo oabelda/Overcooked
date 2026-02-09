@@ -10,11 +10,11 @@ public class ScoreManagerBehaviour : MonoBehaviour
      */
     [SerializeField] LevelConfig level;
 
-    [SerializeField] int score;
-    [SerializeField] int comboCount;
-    [SerializeField] int comboMultiplier;
-    int highestCombo;
+    int comboCount;
+    int comboMultiplier;
 
+    int score;
+    int highestCombo;
     int fails;
     int delivers;
 
@@ -81,5 +81,11 @@ public class ScoreManagerBehaviour : MonoBehaviour
     public int GetDelivers()
     {
         return delivers;
+    }
+
+    // @TODO esto no debería ir aquí
+    public float GetLevelDuration()
+    {
+        return level.GetLevelDuration();
     }
 }

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
+public delegate void SimpleDelegate();
 
 public class GameManagerBehaviour : MonoBehaviour
 {
@@ -22,6 +22,8 @@ public class GameManagerBehaviour : MonoBehaviour
     int actualOrdersCount;
     float orderTimer;
 
+    float levelTimer;
+
     [Header("Pressure")]
     [Range(0, 1)]
     [SerializeField] float pressure; float Pressure { get { return pressure; } set { pressure = Mathf.Clamp01(value); } }
@@ -39,6 +41,7 @@ public class GameManagerBehaviour : MonoBehaviour
     [SerializeField] int score;
 
     event Order.EventOrder OnOrderAdded;
+    event SimpleDelegate OnLevelEnded;
 
     void Awake()
     {
@@ -58,12 +61,24 @@ public class GameManagerBehaviour : MonoBehaviour
         actualOrdersCount = 0;
         comboCount = 0;
         orderTimer = maxDelay;
+        levelTimer = scoreManager.GetLevelDuration();
         AddRandomOrder();
         avgDelivery = 0;
     }
 
     private void Update()
     {
+        levelTimer -= Time.deltaTime;
+
+        if (levelTimer < 0)
+        {
+            // Level ends
+            this.enabled = false;
+            StopAllCoroutines();
+            if (OnLevelEnded != null) OnLevelEnded();
+            return;
+        }
+
         for (int i = 0; i < actualOrdersCount; ++i)
         {
             if (Time.time >= orders[i].GetFailTime())
@@ -221,5 +236,26 @@ public class GameManagerBehaviour : MonoBehaviour
     public static void RegisterOnOrderAdded(Order.EventOrder f)
     {
         instance.OnOrderAdded += f;
+    }
+
+    public static void RegisterOnLevelEnded(SimpleDelegate f)
+    {
+        instance.OnLevelEnded += f;
+    }
+
+    public static void UnregisterOnLevelEnded(SimpleDelegate f)
+    {
+        instance.OnLevelEnded -= f;
+    }
+
+    public static float GetRemainingLevelTime()
+    {
+        return instance.levelTimer;
+    }
+
+    // @TODO
+    public static ScoreManagerBehaviour GetScoreManagerBehaviour()
+    {
+        return instance.scoreManager;
     }
 }

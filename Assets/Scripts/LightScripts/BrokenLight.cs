@@ -1,3 +1,4 @@
+using System.Xml.Serialization;
 using UnityEngine;
 
 // añade un AudioSource con un zumbido eléctrico o chispa y actívalo/desactívalo igual que la luz.
@@ -7,7 +8,7 @@ public class BrokenLight : MonoBehaviour
     public float minWait = 0.05f;
     public float maxWait = 0.3f;
 
-    void Start()
+    void OnEnable()
     {
         if (targetLight == null)
             targetLight = GetComponent<Light>();
@@ -22,5 +23,10 @@ public class BrokenLight : MonoBehaviour
             targetLight.enabled = !targetLight.enabled;
             yield return new WaitForSeconds(Random.Range(minWait, maxWait));
         }
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 }

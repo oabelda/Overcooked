@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName="Menu",menuName="ScriptableObject/Menu")]
+[CreateAssetMenu(fileName="Menu",menuName="Menu")]
 public class MenuSO : ScriptableObject
 {
     [SerializeField] PickableItemBehaviour[] dishes;

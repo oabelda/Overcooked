@@ -53,6 +53,11 @@ public class LevelConfig : ScriptableObject
         return maxComboMultiplier;
     }
 
+    public float GetLevelDuration()
+    {
+        return levelDuration;
+    }
+
     public int GetStars(int score, int playersCount)
     {
         if (score >= threeStar * playersCount) return 3;
