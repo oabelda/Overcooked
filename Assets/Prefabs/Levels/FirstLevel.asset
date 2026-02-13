@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf11530bde02eb48be69a2afe328f86, type: 3}
   m_Name: FirstLevel
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
-  levelDuration: 5
+  levelDuration: 3
   baseDeliverScore: 40
   ingredientScore: 20
   minTip: 0

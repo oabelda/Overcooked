@@ -13,7 +13,7 @@ public class ScoreManagerBehaviour : MonoBehaviour
     int comboCount;
     int comboMultiplier;
 
-    int score;
+    [SerializeField] int score;
     int highestCombo;
     int fails;
     int delivers;
@@ -87,5 +87,10 @@ public class ScoreManagerBehaviour : MonoBehaviour
     public float GetLevelDuration()
     {
         return level.GetLevelDuration();
+    }
+
+    public int GetStars(int playersCount)
+    {
+        return level.GetStars(score, playersCount);
     }
 }
