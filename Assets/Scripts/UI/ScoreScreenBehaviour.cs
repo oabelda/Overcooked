@@ -41,7 +41,7 @@ public class ScoreScreenBehaviour : MonoBehaviour
         int score = GameManagerBehaviour.GetScoreManagerBehaviour().GetScore();
         int succed = GameManagerBehaviour.GetScoreManagerBehaviour().GetDelivers();
         int fails = GameManagerBehaviour.GetScoreManagerBehaviour().GetFails();
-        int stars = GameManagerBehaviour.GetScoreManagerBehaviour().GetStars(2);
+        int stars = GameManagerBehaviour.GetScoreManagerBehaviour().GetStars(GameManagerBehaviour.GetNumPlayers());
         // @TODO Num players
 
         yield return new WaitForSeconds(timeBetweenShows);

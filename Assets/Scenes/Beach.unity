@@ -19329,7 +19329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManagerBehaviour
   scoreManager: {fileID: 1674017335}
   numPlayers: 2
-  levelName: Castle
+  levelName: Beach
   menu: {fileID: 11400000, guid: 09f663c0fa8157d43aae80117b9a22d7, type: 2}
   maxOrders: 4
   minDelay: 3
@@ -19880,7 +19880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManagerBehaviour
   level: {fileID: 11400000, guid: 1582c13716f96c6479c0a1d558375bee, type: 2}
-  score: 200
+  score: 500
 --- !u!4 &1674017336
 Transform:
   m_ObjectHideFlags: 0

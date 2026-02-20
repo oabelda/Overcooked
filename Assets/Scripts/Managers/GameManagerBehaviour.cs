@@ -11,6 +11,9 @@ public class GameManagerBehaviour : MonoBehaviour
 
     [SerializeField] ScoreManagerBehaviour scoreManager;
 
+    [SerializeField] int numPlayers;
+    [SerializeField] string levelName;
+
     [Header("Orders")]
     [SerializeField] MenuSO menu;
     [SerializeField] int maxOrders;
@@ -76,6 +79,14 @@ public class GameManagerBehaviour : MonoBehaviour
             this.enabled = false;
             StopAllCoroutines();
             if (OnLevelEnded != null) OnLevelEnded();
+            SaveManagerBehaviour.Save( new SaveData(
+                    levelName,
+                    scoreManager.GetScore(),
+                    scoreManager.GetMaxCombo(),
+                    scoreManager.GetFails(),
+                    scoreManager.GetDelivers(),
+                    scoreManager.GetStars(numPlayers)
+                ) );
             return;
         }
 
@@ -257,5 +268,10 @@ public class GameManagerBehaviour : MonoBehaviour
     public static ScoreManagerBehaviour GetScoreManagerBehaviour()
     {
         return instance.scoreManager;
+    }
+
+    public static int GetNumPlayers()
+    {
+        return instance.numPlayers;
     }
 }
