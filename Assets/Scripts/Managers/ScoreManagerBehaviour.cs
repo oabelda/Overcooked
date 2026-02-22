@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScoreManagerBehaviour : MonoBehaviour
 {
@@ -8,7 +10,7 @@ public class ScoreManagerBehaviour : MonoBehaviour
      * 
      * ¿Estrellas?
      */
-    [SerializeField] LevelConfig level;
+    LevelConfig level;
 
     int comboCount;
     int comboMultiplier;
@@ -18,27 +20,53 @@ public class ScoreManagerBehaviour : MonoBehaviour
     int fails;
     int delivers;
 
-    public void OnDeliver(int ingredientsCount, float relativeTime,
-        bool rightOrder)
+    private void OnEnable()
     {
-        if (!rightOrder)
+        GameManagerBehaviour.OnOrderServed += OnDeliver;
+        GameManagerBehaviour.OnOrderFailed += RegisterFail;
+        GameManagerBehaviour.RegisterOnLevelEnded(OnLevelEnded);
+        level = GameManagerBehaviour.GetLevel();
+    }
+
+    private void OnLevelEnded()
+    {
+        SaveManagerBehaviour.Save(new SaveData(
+            GameManagerBehaviour.GetLevelName(),
+            GetScore(),
+            GetMaxCombo(),
+            GetFails(),
+            GetDelivers(),
+            GetStars(GameManagerBehaviour.GetNumPlayers())
+    ));
+    }
+
+    private void OnDisable()
+    {
+        GameManagerBehaviour.OnOrderServed -= OnDeliver;
+        GameManagerBehaviour.OnOrderFailed -= RegisterFail;
+        GameManagerBehaviour.UnregisterOnLevelEnded(OnLevelEnded);
+    }
+
+    public void OnDeliver(Order order, int index)
+    {
+        if (index != 0)
         {
             // Reiniciar el combo
             ResetCombo();
         }
 
         // Puntuar
-        int tip = Mathf.RoundToInt(Mathf.Lerp(level.GetMinTip(), level.GetMaxTip(), relativeTime));
+        int tip = Mathf.RoundToInt(Mathf.Lerp(level.GetMinTip(), level.GetMaxTip(), order.GetRelativeSpeed(1.5f, 0.5f)));
 
         int thisScore = level.GetBaseDeliverScore() 
-            + ingredientsCount * level.GetIngredientScore()
+            + order.GetToppingsCount() * level.GetIngredientScore()
             + tip * comboMultiplier;
 
         score += thisScore;
 
         delivers += 1;
 
-        if (rightOrder)
+        if (index == 0)
         {
             ++comboCount;
 
@@ -57,7 +85,7 @@ public class ScoreManagerBehaviour : MonoBehaviour
         comboMultiplier = 1;
     }
 
-    public void RegisterFail()
+    public void RegisterFail(Order order, int index)
     {
         ResetCombo();
         fails += 1;

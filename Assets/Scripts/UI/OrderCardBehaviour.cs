@@ -13,26 +13,19 @@ public class OrderCardBehaviour : MonoBehaviour
         timeSlider = GetComponentInChildren<Slider>();
 
         gameObject.SetActive(order != null);
+
+        GameManagerBehaviour.OnOrderFailed += Order_OrderFailed;
+        GameManagerBehaviour.OnOrderServed += Order_OnOrderDelivered;
     }
 
     public void SetOrder(Order order)
     {
-        if (this.order != null)
-        {
-            this.order.OnOrderFailed -= Order_OrderFailed;
-            this.order.OnOrderDelivered -= Order_OnOrderDelivered;
-        }
-
         this.order = order;
 
         if (this.order != null)
         {
             // Visual set the order
             SetVisuals();
-
-            // Link the events
-            this.order.OnOrderFailed += Order_OrderFailed;
-            this.order.OnOrderDelivered += Order_OnOrderDelivered;
 
             // Make sure is the last of the active ones
             transform.SetAsLastSibling();
@@ -66,14 +59,20 @@ public class OrderCardBehaviour : MonoBehaviour
         }
     }
 
-    private void Order_OnOrderDelivered(Order order)
+    private void Order_OnOrderDelivered(Order order, int index)
     {
-        SetOrder(null);
+        if (order == this.order)
+        {
+            SetOrder(null);
+        }
     }
 
-    private void Order_OrderFailed(Order order)
+    private void Order_OrderFailed(Order order, int index)
     {
-        Debug.Log("Se ha fallado este pedido: " + order.GetNameString());
+        if (order == this.order)
+        {
+            Debug.Log("Se ha fallado este pedido: " + order.GetNameString());
+        }
     }
 
     void Update()

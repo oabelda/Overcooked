@@ -4,12 +4,12 @@ using UnityEngine;
 public class OrderSystem : MonoBehaviour
 {
     public List<Order> availableOrders;
-    KitchenChaosDirectorSystem kitchenChaosDirector;
+    DifficultySystem difficult;
 
     void OnEnable()
     {
         DifficultySystem.OnDifficultyChanged += ApplyDifficulty;
-        GameEvents.OnLevelEnded += GameEvents_OnLevelEnded;
+        // GameEvents.OnLevelEnded += GameEvents_OnLevelEnded;
     }
 
     private void GameEvents_OnLevelEnded()
@@ -20,7 +20,7 @@ public class OrderSystem : MonoBehaviour
     public void GenerateOrder()
     {
         // decide tipo de receta según estado suavizado
-        KitchenState state = kitchenChaosDirector.GetCurrentState();
+        DifficultyState state = difficult.GetCurrentState();
 
         Order order;
 

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class DifficultySystem : MonoBehaviour
 {
@@ -13,23 +15,41 @@ public class DifficultySystem : MonoBehaviour
     float currentDifficulty;
     float targetDifficulty;
 
-    DifficultyState currentState;
+    public TeamStrategy currentStrategy;
 
     // DEBUG / override manual
     public bool overrideDifficulty = false;
     [Range(0, 1)] public float manualDifficulty = 0.5f;
 
-    void OnEnable()
-    {
-        GameEvents.OnLevelStarted += HandleLevelStart;
-        GameEvents.OnLevelEnded += HandleLevelEnd;
-    }
+    List<IntentData> intents = new();
 
-    void OnDisable()
-    {
-        GameEvents.OnLevelStarted -= HandleLevelStart;
-        GameEvents.OnLevelEnded -= HandleLevelEnd;
-    }
+    DifficultyState currentState;
+    DifficultyState targetState;
+
+    [Range(0.1f, 5f)]
+    public float momentumSpeed = 1.0f;
+
+    [SerializeField] OrderSystem orderGenerator;
+
+    public List<PlayerMetrics> players;
+
+    public Dictionary<int, float> playerPressure =
+        new Dictionary<int, float>();
+
+    public event Action<int> OnPlayerOverloaded;
+    public event Action<int> OnPlayerUnderloaded;
+
+    //void OnEnable()
+    //{
+    //    GameEvents.OnLevelStarted += HandleLevelStart;
+    //    GameEvents.OnLevelEnded += HandleLevelEnd;
+    //}
+
+    //void OnDisable()
+    //{
+    //    GameEvents.OnLevelStarted -= HandleLevelStart;
+    //    GameEvents.OnLevelEnded -= HandleLevelEnd;
+    //}
 
     void HandleLevelStart(LevelConfig level)
     {
@@ -49,8 +69,58 @@ public class DifficultySystem : MonoBehaviour
 
         ComputeTargetDifficulty();
         SmoothDifficulty();
+        EvaluatePlayers();
+        DetectStrategy();
         BuildDifficultyState();
         Broadcast();
+    }
+
+    void DetectStrategy()
+    {
+        //float specialization =
+        //    analytics.ActionVarianceBetweenPlayers();
+
+        //float stockpile =
+        //    analytics.PreparedIngredientAverage();
+
+        //float reactive =
+        //    analytics.LateOrderStartRatio();
+
+        //if (specialization > 0.6f)
+        //    currentStrategy = TeamStrategy.SpecializedRoles;
+
+        //else if (stockpile > 0.7f)
+        //    currentStrategy = TeamStrategy.Stockpiling;
+
+        //else if (reactive > 0.6f)
+        //    currentStrategy = TeamStrategy.ReactiveCooking;
+
+        //else
+        //    currentStrategy = TeamStrategy.AssemblyLine;
+    }
+
+    void EvaluatePlayers()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            float pressure = CalculatePressure(players[i]);
+            playerPressure[i] = pressure;
+
+            if (pressure > 60)
+                OnPlayerOverloaded?.Invoke(i);
+
+            else if (pressure < 20)
+                OnPlayerUnderloaded?.Invoke(i);
+        }
+    }
+
+    float CalculatePressure(PlayerMetrics p)
+    {
+        return
+            p.activeTasks * 2f +
+            p.recentMistakes * 3f +
+            p.movementBlockedTime * 1.5f -
+            p.idleTime * 2f;
     }
 
     // =====================================================
@@ -68,21 +138,21 @@ public class DifficultySystem : MonoBehaviour
     // =====================================================
     float ComputeAdaptiveDifficulty()
     {
-        if (!profile.enableAdaptive || analytics == null)
+        //if (!profile.enableAdaptive || analytics == null)
             return 0f;
 
-        float efficiency = analytics.GetEfficiency();
-        float combo = analytics.GetAverageComboNormalized();
-        float scoreRate = analytics.GetScorePerMinuteNormalized();
+        //float efficiency = analytics.GetEfficiency();
+        //float combo = analytics.GetAverageComboNormalized();
+        //float scoreRate = analytics.GetScorePerMinuteNormalized();
 
-        // estimación de habilidad
-        float skill =
-            efficiency * 0.5f +
-            combo * 0.3f +
-            scoreRate * 0.2f;
+        //// estimación de habilidad
+        //float skill =
+        //    efficiency * 0.5f +
+        //    combo * 0.3f +
+        //    scoreRate * 0.2f;
 
-        // convertir habilidad en ajuste de dificultad
-        return Mathf.Lerp(-0.25f, 0.25f, skill);
+        //// convertir habilidad en ajuste de dificultad
+        //return Mathf.Lerp(-0.25f, 0.25f, skill);
     }
 
     void AdjustBias()
@@ -154,6 +224,116 @@ public class DifficultySystem : MonoBehaviour
     {
         OnDifficultyChanged?.Invoke(currentState);
     }
+
+    public void RegisterIntent(KitchenIntent intent, float priority)
+    {
+        intents.Add(new IntentData(intent, priority));
+    }
+
+    void LateUpdate()
+    {
+        ResolveIntentions();
+        intents.Clear();
+    }
+
+    void ResolveIntentions()
+    {
+        float chaos = 0;
+        float relief = 0;
+
+        foreach (var i in intents)
+        {
+            switch (i.intent)
+            {
+                case KitchenIntent.IncreaseChaos:
+                    chaos += i.priority;
+                    break;
+
+                case KitchenIntent.ProvideRelief:
+                    relief += i.priority;
+                    break;
+            }
+        }
+
+        targetState.chaosLevel =
+            Mathf.Clamp01(chaos - relief * 0.5f);
+
+        targetState.reliefLevel =
+            Mathf.Clamp01(relief);
+    }
+
+    //void Update()
+    //{
+    //    currentState.chaosLevel = Mathf.Lerp(
+    //        currentState.chaosLevel,
+    //        targetState.chaosLevel,
+    //        Time.deltaTime * momentumSpeed);
+
+    //    currentState.reliefLevel = Mathf.Lerp(
+    //        currentState.reliefLevel,
+    //        targetState.reliefLevel,
+    //        Time.deltaTime * momentumSpeed);
+
+    //    currentState.cooperationBias = Mathf.Lerp(
+    //        currentState.cooperationBias,
+    //        targetState.cooperationBias,
+    //        Time.deltaTime * momentumSpeed);
+    //}
+
+    public DifficultyState GetCurrentState()
+    {
+        return currentState;
+    }
+
+    //void Update()
+    //{
+    //    float pressure = EvaluatePressure();
+
+    //    // DecideIntervention
+    //    {
+    //        if (funPressureIndex < 30)
+    //            InjectChaos(); // CreateResourceConflict(); MixRecipeDependencies();
+
+    //        else if (funPressureIndex > 70)
+    //            CreateReliefMoment();
+    //    }
+    //}
+
+
+    //float EvaluatePressure()
+    //{
+    //    float orderStress =
+    //        analytics.activeOrders * 5f +
+    //        analytics.ordersNearFail * 10f;
+
+    //    float chaosStress =
+    //        analytics.playerCollisions * 2f +
+    //        analytics.burnedFood * 8f;
+
+    //    float idlePenalty =
+    //        analytics.timeWithoutMistakes < 20f ? -10f : 0f;
+
+    //    return Mathf.Clamp(orderStress + chaosStress + idlePenalty, 0, 100);
+
+    //    funPressureIndex =
+    //        analytics.activeOrders * 0.4f +
+    //        analytics.ordersNearFail * 1.2f +
+    //        analytics.recentMistakes * 0.8f -
+    //        analytics.comboChain * 0.5f;
+
+    //    funPressureIndex = Mathf.Clamp(funPressureIndex, 0, 100);
+    //}
+
+    void HandleOverloadedPlayer(int playerId)
+    {
+        orderGenerator.IncreaseParallelRecipes();
+        orderGenerator.ReduceCriticalDependencies();
+    }
+
+    void HandleUnderloadedPlayer(int playerId)
+    {
+        orderGenerator.SpawnAssistTasksNear(playerId);
+    }
 }
 
 [System.Serializable]
@@ -165,6 +345,10 @@ public struct DifficultyState
     public float customerPatience;
     public float scoreMultiplier;
     public float pressureLevel;
+    public float chaosLevel;
+    public float reliefLevel;
+    public float cooperationBias;
+    public float recipeComplexity;
 }
 
 
@@ -189,4 +373,44 @@ public class DifficultyProfile : ScriptableObject
 
     [Header("Smoothing")]
     public float smoothingSpeed = 1.5f;
+}
+
+public enum KitchenIntent
+{
+    None,
+    IncreaseChaos,
+    ReducePressure,
+    EncourageCooperation,
+    EnableClimax,
+    ProvideRelief
+}
+
+public struct IntentData
+{
+    public KitchenIntent intent;
+    public float priority;
+
+    public IntentData(KitchenIntent intent, float priority)
+    {
+        this.intent = intent;
+        this.priority = priority;
+    }
+}
+
+public class PlayerMetrics
+{
+    public float activeTasks;
+    public float recentMistakes;
+    public float movementBlockedTime;
+    public float idleTime;
+    public float successfulActions;
+}
+
+public enum TeamStrategy
+{
+    Undefined,
+    SpecializedRoles,
+    AssemblyLine,
+    ReactiveCooking,
+    Stockpiling
 }

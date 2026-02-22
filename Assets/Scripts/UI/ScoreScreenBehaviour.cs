@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class ScoreScreenBehaviour : MonoBehaviour
 {
+    ScoreManagerBehaviour scoreManagerBehaviour;
+
     [SerializeField] Text scoreText;
     [SerializeField] Text highestComboText;
     [SerializeField] Text succedText;
@@ -24,6 +26,7 @@ public class ScoreScreenBehaviour : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         GameManagerBehaviour.RegisterOnLevelEnded(ShowScreen);
+        scoreManagerBehaviour = FindFirstObjectByType<ScoreManagerBehaviour>();
     }
 
     private void ShowScreen()
@@ -37,11 +40,11 @@ public class ScoreScreenBehaviour : MonoBehaviour
 
     IEnumerator ShowResults()
     {
-        int maxCombo = GameManagerBehaviour.GetScoreManagerBehaviour().GetMaxCombo();
-        int score = GameManagerBehaviour.GetScoreManagerBehaviour().GetScore();
-        int succed = GameManagerBehaviour.GetScoreManagerBehaviour().GetDelivers();
-        int fails = GameManagerBehaviour.GetScoreManagerBehaviour().GetFails();
-        int stars = GameManagerBehaviour.GetScoreManagerBehaviour().GetStars(GameManagerBehaviour.GetNumPlayers());
+        int maxCombo = scoreManagerBehaviour.GetMaxCombo();
+        int score = scoreManagerBehaviour.GetScore();
+        int succed = scoreManagerBehaviour.GetDelivers();
+        int fails = scoreManagerBehaviour.GetFails();
+        int stars = scoreManagerBehaviour.GetStars(GameManagerBehaviour.GetNumPlayers());
         // @TODO Num players
 
         yield return new WaitForSeconds(timeBetweenShows);

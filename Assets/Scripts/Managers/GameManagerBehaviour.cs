@@ -9,7 +9,7 @@ public class GameManagerBehaviour : MonoBehaviour
 {
     static GameManagerBehaviour instance;
 
-    [SerializeField] ScoreManagerBehaviour scoreManager;
+    [SerializeField] LevelConfig level;
 
     [SerializeField] int numPlayers;
     [SerializeField] string levelName;
@@ -26,25 +26,15 @@ public class GameManagerBehaviour : MonoBehaviour
     float orderTimer;
 
     float levelTimer;
-
-    [Header("Pressure")]
-    [Range(0, 1)]
-    [SerializeField] float pressure; float Pressure { get { return pressure; } set { pressure = Mathf.Clamp01(value); } }
-    [SerializeField] AnimationCurve pressureCuver;
-
-    float eventModifier;
-    float eventDelayMultiplier = 1;
+    Pressure pressure;
 
     bool spawnLocked;
-    int consecutiveSpawns;
-    float avgDelivery;
-    int comboCount;
-
-    [Header("Score")]
-    [SerializeField] int score;
 
     event Order.EventOrder OnOrderAdded;
     event SimpleDelegate OnLevelEnded;
+    public static System.Action<Order, int> OnOrderFailed { get; internal set; }
+    public static System.Action<Order, int> OnOrderServed { get; internal set; }
+
 
     void Awake()
     {
@@ -62,11 +52,10 @@ public class GameManagerBehaviour : MonoBehaviour
     {
         orders = new Order[maxOrders];
         actualOrdersCount = 0;
-        comboCount = 0;
+        pressure = new Pressure();
         orderTimer = maxDelay;
-        levelTimer = scoreManager.GetLevelDuration();
+        levelTimer = level.GetLevelDuration();
         AddRandomOrder();
-        avgDelivery = 0;
     }
 
     private void Update()
@@ -79,30 +68,14 @@ public class GameManagerBehaviour : MonoBehaviour
             this.enabled = false;
             StopAllCoroutines();
             if (OnLevelEnded != null) OnLevelEnded();
-            SaveManagerBehaviour.Save( new SaveData(
-                    levelName,
-                    scoreManager.GetScore(),
-                    scoreManager.GetMaxCombo(),
-                    scoreManager.GetFails(),
-                    scoreManager.GetDelivers(),
-                    scoreManager.GetStars(numPlayers)
-                ) );
             return;
         }
 
         for (int i = 0; i < actualOrdersCount; ++i)
         {
-            if (Time.time >= orders[i].GetFailTime())
+            if (orders[i].CheckFail())
             {
-                scoreManager.RegisterFail();
-
-                orders[i].Fail();
-
-                // Pressure Update On Order Failed
-                comboCount = 0;
-                Pressure -= 0.15f;
-
-
+                OnOrderFailed?.Invoke(orders[i],i);
             }
         }
 
@@ -112,59 +85,18 @@ public class GameManagerBehaviour : MonoBehaviour
 
         if (orderTimer <= 0) // Try Spawn Order
         {
-            // Get effective pressure
-            float effectivePressure = GetEffectivePressure();
-
-            float chance = Mathf.Lerp(.4f, .9f, effectivePressure);
-
-            if (consecutiveSpawns >= 2)
-                chance *= .4f;
-
-            if (Random.value < chance)
+            if (pressure.PressureTry(.4f,.9f,2,.4f))
             {
                 AddRandomOrder();
-                ++consecutiveSpawns;
             }
             else
             {
-                consecutiveSpawns = 0;
             }
 
             // Get next delay
-            orderTimer = Mathf.Lerp(maxDelay, minDelay, effectivePressure) * eventDelayMultiplier;
+            orderTimer = Mathf.Lerp(maxDelay, minDelay, pressure.GetEffectivePressure());
         }
     }
-
-    private float GetEffectivePressure()
-    {
-        return pressureCuver.Evaluate(Pressure) + eventModifier;
-    }
-
-    #region Pressure Events
-    public void TriggerRush(int seconds, float eventModifier)
-    {
-        StartCoroutine(RushEvent(seconds, eventModifier));
-    }
-
-    private IEnumerator RushEvent(int seconds, float eventModifier)
-    {
-        this.eventModifier += eventModifier;
-        yield return new WaitForSeconds(seconds);
-        this.eventModifier -= eventModifier;
-    }
-
-    public void TriggerCalm(int seconds, float delayMultiplier)
-    {
-        StartCoroutine(CalmEvent(seconds, delayMultiplier));
-    }
-
-    private IEnumerator CalmEvent(int seconds, float delayMultiplier)
-    {
-        this.eventDelayMultiplier += delayMultiplier;
-        yield return new WaitForSeconds(seconds);
-        this.eventDelayMultiplier -= delayMultiplier;
-    }
-    #endregion
 
     public static bool TryDeliver(PickableItemBehaviour delivered)
     {
@@ -174,10 +106,6 @@ public class GameManagerBehaviour : MonoBehaviour
             // its "same" container
             if (instance.orders[order].CheckOrderInstance(delivered))
             {
-                instance.scoreManager.OnDeliver(
-                    instance.orders[order].GetToppingsCount(), // Ingredients
-                    instance.orders[order].GetRelativeSpeed(), // relativeTime
-                    order == 0); // rightOrder
                 instance.Deliver(order);
                 return true;
             }
@@ -187,21 +115,7 @@ public class GameManagerBehaviour : MonoBehaviour
 
     private void Deliver(int index)
     {
-        // Raise score and combo count
-        ++score;
-
-        // Update pressure
-        float expectedTime = orders[index].GetExpectedTime();
-
-        float speedScore = Mathf.InverseLerp(expectedTime * 1.5f, expectedTime * 0.5f, orders[index].GetDeliveryTime());
-
-        avgDelivery = Mathf.Lerp(avgDelivery, (1-speedScore)*2f, 0.2f);
-
-        // Raise pressure (fixed) + (combo) + (speed) + (avgSpeed)
-        Pressure += 0.1f + (comboCount++ * 0.02f) + (speedScore * 0.08f) + (avgDelivery * 0.04f);
-
-        // Show actual orders
-        orders[index].Deliver();
+        OnOrderServed?.Invoke(orders[index],index);
 
         // Take out one order
         --actualOrdersCount;
@@ -222,7 +136,7 @@ public class GameManagerBehaviour : MonoBehaviour
             AddRandomOrder();
 
             // Get next delay
-            orderTimer = Mathf.Lerp(maxDelay, minDelay, GetEffectivePressure()) * eventDelayMultiplier;
+            orderTimer = Mathf.Lerp(maxDelay, minDelay, pressure.GetEffectivePressure());
         }
         else
         {
@@ -264,14 +178,18 @@ public class GameManagerBehaviour : MonoBehaviour
         return instance.levelTimer;
     }
 
-    // @TODO
-    public static ScoreManagerBehaviour GetScoreManagerBehaviour()
-    {
-        return instance.scoreManager;
-    }
-
     public static int GetNumPlayers()
     {
         return instance.numPlayers;
+    }
+
+    public static LevelConfig GetLevel()
+    {
+        return instance.level;
+    }
+
+    public static string GetLevelName()
+    {
+        return instance.levelName;
     }
 }
