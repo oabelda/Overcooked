@@ -65,4 +65,9 @@ public class LevelConfig : ScriptableObject
         if (score >= oneStar * playersCount) return 1;
         return 0;
     }
+
+    public int GetThreeStarScore(int players)
+    {
+        return threeStar * players;
+    }
 }

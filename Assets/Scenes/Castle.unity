@@ -19327,39 +19327,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ce3bd21cfd46741a42578faad1d0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManagerBehaviour
+<<<<<<< Updated upstream
   scoreManager: {fileID: 1674017335}
   numPlayers: 2
   levelName: Castle
+=======
+  level: {fileID: 11400000, guid: 1582c13716f96c6479c0a1d558375bee, type: 2}
+>>>>>>> Stashed changes
   menu: {fileID: 11400000, guid: 09f663c0fa8157d43aae80117b9a22d7, type: 2}
   maxOrders: 4
   minDelay: 3
   maxDelay: 10
-  pressure: 0
-  pressureCuver:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  score: 0
+  pressure:
+    pressure: 0
+    pressureCuver:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
 --- !u!4 &1650537371
 Transform:
   m_ObjectHideFlags: 0
@@ -19879,8 +19883,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645bbeb6e8c511e4181f23dfd96e5f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManagerBehaviour
+<<<<<<< Updated upstream
   level: {fileID: 11400000, guid: 1582c13716f96c6479c0a1d558375bee, type: 2}
   score: 200
+=======
+  score: 300
+>>>>>>> Stashed changes
 --- !u!4 &1674017336
 Transform:
   m_ObjectHideFlags: 0
@@ -20069,7 +20077,8 @@ MonoBehaviour:
   - {fileID: 1051323961}
   - {fileID: 331918374}
   - {fileID: 1134287518}
-  timeBetweenShows: 1
+  timeBetweenShows: 0.5
+  counterDuration: 3
   lightOffStars: {r: 1, g: 1, b: 1, a: 0.39215687}
   lightOnStars: {r: 1, g: 0.94509804, b: 0, a: 1}
 --- !u!1001 &1685156566

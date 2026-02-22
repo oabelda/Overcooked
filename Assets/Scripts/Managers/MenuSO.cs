@@ -28,8 +28,8 @@ public class Order
     float maxTime; // Never changes @TODO que dependa de la presión y del plato (expected * factorMargen)
     float failTime; // Changes
 
-    public event EventOrder OnOrderFailed;
-    public event EventOrder OnOrderDelivered;
+    //public event EventOrder OnOrderFailed;
+    //public event EventOrder OnOrderDelivered;
 
     public Order(PickableItemBehaviour item)
     {
@@ -130,24 +130,18 @@ public class Order
         return ordContainer != null;
     }
 
+    public float GetRelativeSpeed(float slowMultiplier, float quickMultiplier)
+    {
+        float deliveryTime = GetDeliveryTime();
+        float quickTime = expectedTime * quickMultiplier;
+        float slowTime = expectedTime * slowMultiplier;
+
+        return Mathf.InverseLerp(slowTime, quickTime, deliveryTime);
+    }
+
     public float GetDeliveryTime()
     {
         return Time.time - spawnTime;
-    }
-    public float GetExpectedTime()
-    {
-        return expectedTime;
-    }
-
-    public float GetFailTime() { return  failTime; }
-
-    public float GetRelativeSpeed()
-    {
-        float duration = GetDeliveryTime();
-        float quickTime = expectedTime * 0.8f ;
-        float slowTime = expectedTime * 1.2f;
-
-        return Mathf.InverseLerp(slowTime, quickTime, duration);
     }
 
     public float GetProgress()
@@ -156,14 +150,13 @@ public class Order
         return 1 - (remaining / maxTime);
     }
 
-    public void Deliver()
+    public bool CheckFail()
     {
-        if (OnOrderDelivered!= null) OnOrderDelivered(this);
-    }
-
-    public void Fail()
-    {
-        failTime = Time.time + maxTime;
-        if (OnOrderFailed != null) OnOrderFailed(this);
+        if (Time.time >= failTime)
+        {
+            failTime = Time.time + maxTime;
+            return true;
+        }
+        return false;
     }
 }
