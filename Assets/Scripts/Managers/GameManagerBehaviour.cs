@@ -11,7 +11,7 @@ public class GameManagerBehaviour : MonoBehaviour
 
     [SerializeField] LevelConfig level;
 
-    [SerializeField] int numPlayers;
+    [SerializeField]int numPlayers;
     [SerializeField] string levelName;
 
     [Header("Orders")]
@@ -26,7 +26,7 @@ public class GameManagerBehaviour : MonoBehaviour
     float orderTimer;
 
     float levelTimer;
-    Pressure pressure;
+    [SerializeField] Pressure pressure;
 
     bool spawnLocked;
 
@@ -41,6 +41,7 @@ public class GameManagerBehaviour : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            instance.numPlayers = 0;
         }
         else
         {
@@ -52,7 +53,6 @@ public class GameManagerBehaviour : MonoBehaviour
     {
         orders = new Order[maxOrders];
         actualOrdersCount = 0;
-        pressure = new Pressure();
         orderTimer = maxDelay;
         levelTimer = level.GetLevelDuration();
         AddRandomOrder();
@@ -191,5 +191,15 @@ public class GameManagerBehaviour : MonoBehaviour
     public static string GetLevelName()
     {
         return instance.levelName;
+    }
+
+    public static void AddNewPlayer()
+    {
+        instance.numPlayers += 1;
+    }
+
+    public static void RemovePlayer() 
+    {
+        instance.numPlayers -= 1;
     }
 }

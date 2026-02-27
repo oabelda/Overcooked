@@ -4,54 +4,44 @@ using System.Collections.Generic;
 [ExecuteAlways]
 public class PlayerColor : MonoBehaviour
 {
-    [SerializeField] Material bodyMaterial; // material original
+    [SerializeField] string materialName = "body";
+    string colorProperty = "_Color";
     [SerializeField] Color playerColor = Color.white;
 
-    Material instanceMaterial;
+    struct TargetSlot
+    {
+        public Renderer renderer;
+        public int materialIndex;
+    }
 
-    List<Renderer> renderers = new List<Renderer>();
+    readonly List<TargetSlot> targets = new List<TargetSlot>();
+
+    MaterialPropertyBlock propertyBlock;
+    bool initialized;
 
     void OnEnable()
     {
-        CollectRenderers();
+        Initialize();
         ApplyColor();
     }
 
+#if UNITY_EDITOR
     void OnValidate()
     {
-        CollectRenderers();
+        initialized = false; // fuerza recolección
+        Initialize();
         ApplyColor();
     }
+#endif
 
-    void CollectRenderers()
+    void Initialize()
     {
-        renderers.Clear();
-
-        foreach (var r in GetComponentsInChildren<Renderer>(true))
-        {
-            foreach (var mat in r.sharedMaterials)
-            {
-                if (mat == bodyMaterial)
-                {
-                    renderers.Add(r);
-                    break;
-                }
-            }
-        }
-    }
-
-    void ApplyColor()
-    {
-        if (!bodyMaterial)
+        if (initialized)
             return;
 
-        if (instanceMaterial == null)
-        {
-            instanceMaterial = new Material(bodyMaterial);
-            instanceMaterial.name = bodyMaterial.name + "_Instance";
-        }
+        targets.Clear();
 
-        instanceMaterial.color = playerColor;
+        var renderers = GetComponentsInChildren<Renderer>(true);
 
         foreach (var r in renderers)
         {
@@ -59,11 +49,42 @@ public class PlayerColor : MonoBehaviour
 
             for (int i = 0; i < mats.Length; i++)
             {
-                if (mats[i] == bodyMaterial)
-                    mats[i] = instanceMaterial;
-            }
+                var mat = mats[i];
 
-            r.sharedMaterials = mats;
+                if (mat != null && mat.name.StartsWith(materialName))
+                {
+                    targets.Add(new TargetSlot
+                    {
+                        renderer = r,
+                        materialIndex = i
+                    });
+                }
+            }
         }
+
+        if (propertyBlock == null)
+            propertyBlock = new MaterialPropertyBlock();
+
+        initialized = true;
+    }
+
+    void ApplyColor()
+    {
+        foreach (var t in targets)
+        {
+            if (!t.renderer) continue;
+
+            t.renderer.GetPropertyBlock(propertyBlock, t.materialIndex);
+
+            propertyBlock.SetColor(colorProperty, playerColor);
+
+            t.renderer.SetPropertyBlock(propertyBlock, t.materialIndex);
+        }
+    }
+
+    public void SetColor(Color newColor)
+    {
+        playerColor = newColor;
+        ApplyColor();
     }
 }

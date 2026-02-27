@@ -5,8 +5,6 @@ public class PlayerInteractBehaviour : MonoBehaviour, IPickableParentBehaviour
 {
     Color playerColor;
     InteractableBehaviour activeAppliance;
-    [SerializeField] Key interactKey;
-    [SerializeField] Key pickDropKey;
 
     PickableItemBehaviour carriedIngredient;
 
@@ -18,20 +16,13 @@ public class PlayerInteractBehaviour : MonoBehaviour, IPickableParentBehaviour
     void Update()
     {
         HandleFocus();
+    }
+
+    public void Interact(bool wasPressedThisFrame)
+    {
         if (activeAppliance != null)
         {
-            if (Keyboard.current[interactKey].isPressed)
-            {
-                activeAppliance.Interact(this, false);
-            }
-            if (Keyboard.current[interactKey].wasPressedThisFrame)
-            {
-                activeAppliance.Interact(this, true);
-            }
-            if (Keyboard.current[pickDropKey].wasPressedThisFrame)
-            {
-                PickOrDrop();
-            }
+            activeAppliance.Interact(this, wasPressedThisFrame);
         }
     }
 
@@ -79,8 +70,10 @@ public class PlayerInteractBehaviour : MonoBehaviour, IPickableParentBehaviour
         }
     }
 
-    void PickOrDrop()
+    public void PickOrDrop()
     {
+        if (activeAppliance == null) return;
+
         if (HasItem())
         {
             // Try to place

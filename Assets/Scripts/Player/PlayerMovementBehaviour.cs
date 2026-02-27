@@ -8,12 +8,6 @@ public class PlayerMovementBehaviour : MonoBehaviour
     [SerializeField] float movementSpeed;
     [SerializeField] float rotationSpeed;
 
-    // Control Movement Keyboard Keys
-    [SerializeField] Key fowardKey;
-    [SerializeField] Key backwardKey;
-    [SerializeField] Key leftKey;
-    [SerializeField] Key rightKey;
-
     Animator animator;
 
     private void Start()
@@ -21,19 +15,8 @@ public class PlayerMovementBehaviour : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Move(Vector3 moveDirection)
     {
-        Move();
-    }
-
-    void Move()
-    {
-        Vector3 moveDirection;
-
-        // Calculate the direction based on the inputs
-        moveDirection = CalculateMoveDirection();
-
         // Actually move the "body"
         transform.position = transform.position +
             moveDirection * movementSpeed * Time.deltaTime;
@@ -68,39 +51,5 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
         // Rotate
         transform.rotation = newRotation;
-    }
-
-    Vector3 CalculateMoveDirection()
-    {
-        Vector3 moveVector;
-        Vector3 moveNormalized;
-
-        moveVector = new Vector3(0, 0, 0);
-
-        // Ckeck inputs
-
-        // Keyboard.current[Key.W].isPressed
-        // Keyboard.current.wKey.isPressed
-        if (Keyboard.current[fowardKey].isPressed)
-        {
-            moveVector.z = moveVector.z + 1;
-        }
-        if (Keyboard.current[backwardKey].isPressed)
-        {
-            moveVector.z = moveVector.z - 1;
-        }
-        if (Keyboard.current[leftKey].isPressed)
-        {
-            moveVector.x = moveVector.x - 1;
-        }
-        if (Keyboard.current[rightKey].isPressed)
-        {
-            moveVector.x = moveVector.x + 1;
-        }
-
-        // Normalize value (magnitude became one)
-        moveNormalized = moveVector.normalized;
-
-        return moveNormalized;
     }
 }

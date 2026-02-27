@@ -41,15 +41,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.674
+      value: 2.995
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.25
+      value: -0.2365651
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.576
+      value: -4.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
       propertyPath: m_LocalRotation.w
@@ -95,6 +95,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chubby
       objectReference: {fileID: 0}
+    - target: {fileID: 3956096130356683897, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 90db230f595b15f439018aa341163995, type: 2}
     - target: {fileID: 4189920116162689335, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
@@ -135,6 +139,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2873122054816008551}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5772597812486399869}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7886972447112791877}
   m_SourcePrefab: {fileID: 100100000, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
 --- !u!4 &6032548333227452317 stripped
 Transform:
@@ -232,10 +242,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementBehaviour
   movementSpeed: 5
   rotationSpeed: 720
-  fowardKey: 37
-  backwardKey: 33
-  leftKey: 15
-  rightKey: 18
 --- !u!114 &9122192730544540225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,8 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f814aa372bb84f4ea42cbc300f20e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractBehaviour
-  interactKey: 19
-  pickDropKey: 31
   handsPosition: {fileID: 7647690140624164282}
   interactOrigin: {fileID: 6032548333227452317}
   interactionDistance: 1.25
@@ -281,6 +285,33 @@ MonoBehaviour:
   actualExpresion: 0
   rend: {fileID: 7123484848436405263}
   materialIndex: 2
+--- !u!114 &5772597812486399869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6412063826351881511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e426dbe0b0adb4cb51c402fd6a1c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerControllerBehaviour
+  inputs: {fileID: 11400000, guid: bd3e176576c920949be43c7a2117f551, type: 2}
+--- !u!114 &7886972447112791877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6412063826351881511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002564b50dbd0144cafd773ba24ab1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerColor
+  materialName: Body
+  playerColor: {r: 0.8773585, g: 0, b: 0, a: 1}
 --- !u!137 &7123484848436405263 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3956096130356683897, guid: 1ee3e72fe3c873344b92d3eb2fb98443, type: 3}
