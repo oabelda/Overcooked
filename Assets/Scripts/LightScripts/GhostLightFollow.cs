@@ -2,16 +2,26 @@ using UnityEngine;
 
 public class GhostLightFollow : MonoBehaviour
 {
-    public Transform player;
-    public float followSpeed = 2f;
-    public Vector3 offset = new Vector3(0, 2, 0);
+    [SerializeField] int playerIndex = 0;
+    Transform player;
+    [SerializeField] float followSpeed = 2f;
+    [SerializeField] Vector3 offset = new Vector3(0, 2, 0);
+
+    void AssingPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        if (players.Length > playerIndex)
+        {
+            player = players[playerIndex].transform;
+        }
+    }
 
     void Update()
     {
         if (player == null)
         {
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null) player = p.transform;
+            AssingPlayer();
         }
 
         if (player != null)

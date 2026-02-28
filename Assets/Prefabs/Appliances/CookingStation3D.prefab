@@ -103,7 +103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33474e61dad6ab14fbf969ce1c35ae24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProgressBarBehaviour
-  progressSlider: {fileID: 2413492836762195167}
 --- !u!1 &1672042270691582715
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,6 +332,7 @@ GameObject:
   - component: {fileID: 6318366320874198904}
   - component: {fileID: 4800966622266315643}
   - component: {fileID: 9184936738909056909}
+  - component: {fileID: 8906113427000879867}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -423,6 +423,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8906113427000879867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491287326403745466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a3e5ab0fb9f0b54bb21958ff04b2746, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LookAtCameraBehaviour
 --- !u!1 &6026183276937583665
 GameObject:
   m_ObjectHideFlags: 0

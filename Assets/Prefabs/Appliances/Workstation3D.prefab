@@ -332,6 +332,7 @@ GameObject:
   - component: {fileID: 307003198735892068}
   - component: {fileID: 8956880191979359985}
   - component: {fileID: 3167355026694226713}
+  - component: {fileID: 4917629803250675395}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -422,6 +423,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4917629803250675395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3325956757859955503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a3e5ab0fb9f0b54bb21958ff04b2746, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LookAtCameraBehaviour
 --- !u!1 &3628234510794196268
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 public class HeartbeatLight : MonoBehaviour
 {
     public Light pulseLight;
-    public float baseIntensity = 0.8f;
+    float baseIntensity = 0.8f;
     public float pulseStrength = 0.5f;
     public float pulseSpeed = 2f;
 
@@ -11,6 +11,8 @@ public class HeartbeatLight : MonoBehaviour
     {
         if (pulseLight == null)
             pulseLight = GetComponent<Light>();
+
+        baseIntensity = pulseLight.intensity;
     }
 
     void Update()
