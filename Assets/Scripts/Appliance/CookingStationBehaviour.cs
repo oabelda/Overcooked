@@ -9,10 +9,15 @@ public class CookingStationBehaviour : InteractableBehaviour, IProcessor
     event PickableEvent OnItemPlaced;
     event FloatEvent OnItemProcessed;
 
+    ParticleSystem particles;
+
     protected override void Start()
     {
         base.Start();
-        this.enabled = false;
+
+        this.particles = GetComponentInChildren<ParticleSystem>();
+
+        ActivateFire();
     }
 
     private void Update()
@@ -38,12 +43,12 @@ public class CookingStationBehaviour : InteractableBehaviour, IProcessor
         if (cookableItem != null)
         {
             this.enabled = true;
-            SetPlayerColor(Color.aquamarine);
+            particles.gameObject.SetActive(true);
         }
         else
         {
             this.enabled = false;
-            ResetColor();
+            particles.gameObject.SetActive(false);
         }
     }
 

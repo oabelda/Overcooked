@@ -25,7 +25,7 @@ public class ScoreScreenBehaviour : MonoBehaviour
     void Start()
     {
         this.gameObject.SetActive(false);
-        GameManagerBehaviour.RegisterOnLevelEnded(ShowScreen);
+        GameManagerBehaviour.OnLevelEnded += ShowScreen;
         scoreManagerBehaviour = FindFirstObjectByType<ScoreManagerBehaviour>();
     }
 

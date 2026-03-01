@@ -10,7 +10,7 @@ public class OrdersPanelBehaviour : MonoBehaviour
     {
         orders = GetComponentsInChildren<OrderCardBehaviour>(true);
 
-        GameManagerBehaviour.RegisterOnOrderAdded(AddOrder);
+        GameManagerBehaviour.OnOrderAdded+= AddOrder;
     }
 
     public void AddOrder(Order newOrder)

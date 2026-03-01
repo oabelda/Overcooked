@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,18 +7,12 @@ public class InteractableBehaviour : MonoBehaviour, IPickableParentBehaviour
     protected PickableItemBehaviour placedItem;
     [SerializeField] Transform itemPlacePoint;
 
-    Color initColor;
-    [SerializeField] Color activeColor;
-    [SerializeField] new MeshRenderer renderer;
     int focusCount;
+
+    public event Action<bool> OnFocusChange;
 
     protected virtual void Start()
     {
-        if (renderer == null)
-        {
-            renderer = GetComponent<MeshRenderer>();
-        }
-        initColor = renderer.material.color;
         focusCount = 0;
     }
 
@@ -36,29 +31,7 @@ public class InteractableBehaviour : MonoBehaviour, IPickableParentBehaviour
         {
             focusCount = focusCount - 1;
         }
-
-        if (renderer.material.color == initColor ||
-            renderer.material.color == activeColor)
-        {
-            ResetColor();
-        }
-    }
-
-    protected void SetPlayerColor(Color givenColor)
-    {
-        renderer.material.color= givenColor;
-    }
-
-    protected void ResetColor()
-    {
-        if (focusCount > 0) // Is Focus
-        {
-            renderer.material.color = activeColor;
-        }
-        else // Is not focus
-        {
-            renderer.material.color = initColor;
-        }
+        OnFocusChange?.Invoke(focusCount > 0);
     }
 
     public virtual PickableItemBehaviour Take()
@@ -112,44 +85,17 @@ public class InteractableBehaviour : MonoBehaviour, IPickableParentBehaviour
         IPickableParentBehaviour parent)
     {
         ICombinable[] aC = a.GetComponents<ICombinable>();
-        ICombinable[] bC = b.GetComponents<ICombinable>();
-
-        int index;
-        index = 0;
-        while (index < aC.Length)
+        for (int index = 0; index < aC.Length; ++index) 
         {
-            ICombinable actual;
-            actual = aC[index];
-
-            if (actual.Combine(b, parent))
-            {
-                // He podido combinar
-                return;
-            }
-            else
-            {
-                // No he podido combinar
-            }
-
-            index = index + 1;
+            // If combine a with b is posible
+            if (aC[index].Combine(b, parent)) return;
         }
-        index = 0;
 
-        while (index < bC.Length)
+        ICombinable[] bC = b.GetComponents<ICombinable>();
+        for (int index = 0; index < bC.Length; ++index)
         {
-            ICombinable actual;
-            actual = bC[index];
-            if (actual.Combine(a, parent))
-            {
-                // He podido combinar
-                return;
-            }
-            else
-            {
-                // No he podido combinar
-            }
-
-            index = index + 1;
+            // If combine b with a is posible
+            if (bC[index].Combine(a, parent)) return;
         }
     }
 }

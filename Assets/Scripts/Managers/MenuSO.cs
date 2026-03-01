@@ -17,8 +17,6 @@ public class MenuSO : ScriptableObject
 
 public class Order
 {
-    public delegate void EventOrder(Order order);
-
     PickableItemBehaviour order;
     ContainerCombinableBehaviour ordContainer;
     bool[] toppings;
@@ -27,9 +25,6 @@ public class Order
     float expectedTime; // Never changes @TODO que dependa de la presión y del plato (suma de tiempos de pasos (cortar, cocinar, etc) + buffers
     float maxTime; // Never changes @TODO que dependa de la presión y del plato (expected * factorMargen)
     float failTime; // Changes
-
-    //public event EventOrder OnOrderFailed;
-    //public event EventOrder OnOrderDelivered;
 
     public Order(PickableItemBehaviour item)
     {
@@ -99,9 +94,9 @@ public class Order
 
     public bool CheckOrderInstance(PickableItemBehaviour checking)
     {
-        // They have the same name, adn there is no container or if there is its "same" contaniner
+        // They have the same name, and there is no container or if there is its "same" contaniner
         return checking.IsInstanceOf(order) &&
-                (!IsCombinable() || checking.GetComponent<ContainerCombinableBehaviour>().CheckToppings(this));
+                (ordContainer == null || checking.GetComponent<ContainerCombinableBehaviour>().CheckToppings(this));
     }
 
     public bool GetRequiredTopping(int index)
@@ -123,11 +118,6 @@ public class Order
             }
         }
         return count;
-    }
-
-    private bool IsCombinable()
-    {
-        return ordContainer != null;
     }
 
     public float GetRelativeSpeed(float slowMultiplier, float quickMultiplier)

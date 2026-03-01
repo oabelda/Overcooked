@@ -9,7 +9,7 @@ public class MicrowaveBehaviour : InteractableBehaviour, IProcessor
     bool isCooking;
     [SerializeField] float cookingTime;
 
-    event PickableEvent OnItemPlaced;
+    //event PickableEvent OnItemPlaced;
     event FloatEvent OnItemProcessed;
 
     protected override void Start()
@@ -55,6 +55,7 @@ public class MicrowaveBehaviour : InteractableBehaviour, IProcessor
                 // Cook the ingredient
                 cookableItem.Complete(); // Option 1
                 // placedIngredient.Cook(placedIngredient.GetRemainTime()); // Option 2
+                OnItemProcessed?.Invoke(1);
             }
             else
             {
@@ -77,7 +78,7 @@ public class MicrowaveBehaviour : InteractableBehaviour, IProcessor
 
     public void RegisterOnItemPlaced(PickableEvent a)
     {
-        OnItemPlaced += a;
+        //OnItemPlaced += a;
     }
 
     public void RegisterOnItemProcessed(FloatEvent function)

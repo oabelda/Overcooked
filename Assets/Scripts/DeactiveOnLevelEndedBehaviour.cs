@@ -8,7 +8,7 @@ public class DeactiveOnLevelEndedBehaviour : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameManagerBehaviour.RegisterOnLevelEnded(Deactivate);
+        GameManagerBehaviour.OnLevelEnded += Deactivate;
     }
 
     // Update is called once per frame

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -5,7 +6,10 @@ using UnityEngine.InputSystem;
 
 public class SaveManagerBehaviour
 {
-    static SaveData[] allLevels;
+    static string folderPath = Application.persistentDataPath + "\\Saves";
+    static string fileName = "save.happycook";
+
+    static Dictionary<string,SaveData> allLevels;
 
     public static void Save(SaveData data)
     {
@@ -13,28 +17,14 @@ public class SaveManagerBehaviour
         {
             LoadLevels();
             if (allLevels == null)
-            {
-                allLevels = new SaveData[4];
-            }
+                allLevels = new Dictionary<string, SaveData>();
         }
 
-        for (int i = 0; i < allLevels.Length; ++i) 
-        {
-            if (allLevels[i] == null || 
-                allLevels[i].GetLevelName() == data.GetLevelName())
-            {
-                allLevels[i] = data;
-                break;
-            }
-        }
-
-        string folderPath = Application.persistentDataPath + "\\Saves";
-        string fileName = "save.happycook";
+        // Save or overwrite
+        allLevels[data.GetLevelName()] = data;
 
         if (!Directory.Exists(folderPath)) 
-        {
             Directory.CreateDirectory(folderPath);
-        }
 
         FileStream file = new FileStream(folderPath + "\\" + fileName, FileMode.Create);
         BinaryFormatter formatter = new BinaryFormatter();
@@ -45,37 +35,28 @@ public class SaveManagerBehaviour
     public static SaveData Load(string levelName)
     {
         if (allLevels == null)
-        {
             LoadLevels();
-        }
 
-        if (allLevels != null)
+        if (allLevels != null && allLevels.TryGetValue(levelName,out SaveData data))
         {
             // Search in the array
-            for (int i = 0; i < allLevels.Length; ++i)
-            {
-                if (allLevels[i] !=null && allLevels[i].GetLevelName() == levelName)
-                {
-                    return allLevels[i];
-                }
-            }
+            return data;
         }
 
         return null;
-
     }
 
     private static void LoadLevels()
     {
-        string folderPath = Application.persistentDataPath + "\\Saves";
-        string fileName = "save.happycook";
         string path = folderPath + "\\" + fileName;
 
         if (File.Exists(path))
         {
             FileStream file = new FileStream(path, FileMode.Open);
+
             BinaryFormatter formatter = new BinaryFormatter();
-            allLevels = (SaveData[])formatter.Deserialize(file);
+            allLevels = (Dictionary<string,SaveData>)formatter.Deserialize(file);
+
             file.Close();
         }
     }

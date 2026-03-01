@@ -4,18 +4,15 @@ using UnityEngine.SceneManagement;
 
 public class ScoreManagerBehaviour : MonoBehaviour
 {
-
     /*
      * Pedido = Base + Variable (ingredientes) + Tip(tiempo) * Combo
-     * 
-     * ¿Estrellas?
      */
     LevelConfig level;
 
     int comboCount;
     int comboMultiplier;
 
-    [SerializeField] int score;
+    int score;
     int highestCombo;
     int fails;
     int delivers;
@@ -24,8 +21,15 @@ public class ScoreManagerBehaviour : MonoBehaviour
     {
         GameManagerBehaviour.OnOrderServed += OnDeliver;
         GameManagerBehaviour.OnOrderFailed += RegisterFail;
-        GameManagerBehaviour.RegisterOnLevelEnded(OnLevelEnded);
+        GameManagerBehaviour.OnLevelEnded += OnLevelEnded;
         level = GameManagerBehaviour.GetLevel();
+    }
+
+    private void OnDisable()
+    {
+        GameManagerBehaviour.OnOrderServed -= OnDeliver;
+        GameManagerBehaviour.OnOrderFailed -= RegisterFail;
+        GameManagerBehaviour.OnLevelEnded -= OnLevelEnded;
     }
 
     private void OnLevelEnded()
@@ -37,14 +41,7 @@ public class ScoreManagerBehaviour : MonoBehaviour
             GetFails(),
             GetDelivers(),
             GetStars(GameManagerBehaviour.GetNumPlayers())
-    ));
-    }
-
-    private void OnDisable()
-    {
-        GameManagerBehaviour.OnOrderServed -= OnDeliver;
-        GameManagerBehaviour.OnOrderFailed -= RegisterFail;
-        GameManagerBehaviour.UnregisterOnLevelEnded(OnLevelEnded);
+        ));
     }
 
     public void OnDeliver(Order order, int index)
@@ -79,7 +76,7 @@ public class ScoreManagerBehaviour : MonoBehaviour
         }
     }
 
-    public void ResetCombo()
+    private void ResetCombo()
     {
         comboCount = 0;
         comboMultiplier = 1;
@@ -109,12 +106,6 @@ public class ScoreManagerBehaviour : MonoBehaviour
     public int GetDelivers()
     {
         return delivers;
-    }
-
-    // @TODO esto no debería ir aquí
-    public float GetLevelDuration()
-    {
-        return level.GetLevelDuration();
     }
 
     public int GetStars(int playersCount)

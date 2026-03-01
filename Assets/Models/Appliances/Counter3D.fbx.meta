@@ -3,7 +3,32 @@ guid: 935c0544996797b46903770fbd776262
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CabinetMaterial
+    second: {fileID: 2100000, guid: 31a9f3f314e4567409d0152e8ff82f8b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CounterMaterial
+    second: {fileID: 2100000, guid: ad25cebc471e92d4592f5438810e46f0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DoorLameMaterial
+    second: {fileID: 2100000, guid: 6bac5319679757d469ff697c8d09ab66, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DoorMaterial
+    second: {fileID: 2100000, guid: dd139fbb2b2007340901a2f97e9e94e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KnobMaterial
+    second: {fileID: 2100000, guid: ab368d8d2852dce48aa5eaca7b625afa, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

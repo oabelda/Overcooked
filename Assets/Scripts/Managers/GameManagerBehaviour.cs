@@ -2,8 +2,7 @@ using System.Collections;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-public delegate void SimpleDelegate();
+using UnityEngine.SceneManagement;
 
 public class GameManagerBehaviour : MonoBehaviour
 {
@@ -11,8 +10,7 @@ public class GameManagerBehaviour : MonoBehaviour
 
     [SerializeField] LevelConfig level;
 
-    [SerializeField]int numPlayers;
-    [SerializeField] string levelName;
+    int numPlayers;
 
     [Header("Orders")]
     [SerializeField] MenuSO menu;
@@ -28,13 +26,10 @@ public class GameManagerBehaviour : MonoBehaviour
     float levelTimer;
     [SerializeField] Pressure pressure;
 
-    bool spawnLocked;
-
-    event Order.EventOrder OnOrderAdded;
-    event SimpleDelegate OnLevelEnded;
-    public static System.Action<Order, int> OnOrderFailed { get; internal set; }
-    public static System.Action<Order, int> OnOrderServed { get; internal set; }
-
+    public static event System.Action<Order> OnOrderAdded;
+    public static event System.Action OnLevelEnded;
+    public static event System.Action<Order, int> OnOrderFailed;
+    public static event System.Action<Order, int> OnOrderServed;
 
     void Awake()
     {
@@ -66,20 +61,17 @@ public class GameManagerBehaviour : MonoBehaviour
         {
             // Level ends
             this.enabled = false;
-            StopAllCoroutines();
-            if (OnLevelEnded != null) OnLevelEnded();
+            OnLevelEnded?.Invoke();
             return;
         }
 
         for (int i = 0; i < actualOrdersCount; ++i)
         {
             if (orders[i].CheckFail())
-            {
                 OnOrderFailed?.Invoke(orders[i],i);
-            }
         }
 
-        if (actualOrdersCount >= maxOrders || spawnLocked) return;
+        if (actualOrdersCount >= maxOrders) return;
 
         orderTimer -= Time.deltaTime;
 
@@ -88,9 +80,6 @@ public class GameManagerBehaviour : MonoBehaviour
             if (pressure.PressureTry(.4f,.9f,2,.4f))
             {
                 AddRandomOrder();
-            }
-            else
-            {
             }
 
             // Get next delay
@@ -153,24 +142,8 @@ public class GameManagerBehaviour : MonoBehaviour
             instance.orders[instance.actualOrdersCount] = newOrder;
             instance.actualOrdersCount += 1;
 
-            if (instance.OnOrderAdded != null)
-                instance.OnOrderAdded(newOrder);
+            OnOrderAdded?.Invoke(newOrder);
         }
-    }
-
-    public static void RegisterOnOrderAdded(Order.EventOrder f)
-    {
-        instance.OnOrderAdded += f;
-    }
-
-    public static void RegisterOnLevelEnded(SimpleDelegate f)
-    {
-        instance.OnLevelEnded += f;
-    }
-
-    public static void UnregisterOnLevelEnded(SimpleDelegate f)
-    {
-        instance.OnLevelEnded -= f;
     }
 
     public static float GetRemainingLevelTime()
@@ -190,7 +163,7 @@ public class GameManagerBehaviour : MonoBehaviour
 
     public static string GetLevelName()
     {
-        return instance.levelName;
+        return SceneManager.GetActiveScene().name;
     }
 
     public static void AddNewPlayer()
@@ -200,6 +173,19 @@ public class GameManagerBehaviour : MonoBehaviour
 
     public static void RemovePlayer() 
     {
+        if (instance != null)
         instance.numPlayers -= 1;
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+            OnOrderAdded = null;
+            OnLevelEnded = null;
+            OnOrderFailed = null;
+            OnOrderServed = null;
+        }
     }
 }

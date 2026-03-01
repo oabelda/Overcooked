@@ -1,17 +1,13 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PickableItemBehaviour))]
-public class PlateBehaviour : MonoBehaviour, IPickableParentBehaviour, ICombinable
+public class PlateBehaviour : PickableItemBehaviour, IPickableParentBehaviour, ICombinable
 {
     PickableItemBehaviour food;
     [SerializeField] Transform itemPlacePoint;
 
-    PickableItemBehaviour platePickable;
-
     void Start()
     {
-        platePickable = GetComponent<PickableItemBehaviour>();
-        platePickable.SetParent(this.transform.parent?.GetComponentInParent<IPickableParentBehaviour>());
+        this.SetParent(this.transform.parent?.GetComponentInParent<IPickableParentBehaviour>());
     }
 
     public bool Combine(PickableItemBehaviour other, IPickableParentBehaviour parent)
@@ -22,7 +18,7 @@ public class PlateBehaviour : MonoBehaviour, IPickableParentBehaviour, ICombinab
             if (other.GetComponent<PlateableBehaviour>())
             {
                 other.SetParent(this);
-                platePickable.SetParent(parent);
+                this.SetParent(parent);
                 return true;
             }
         }
@@ -32,7 +28,7 @@ public class PlateBehaviour : MonoBehaviour, IPickableParentBehaviour, ICombinab
             if (AuxCombine(this.GetItem(), other, this)
                 || AuxCombine(other, this.GetItem(), this))
             {
-                platePickable.SetParent(parent);
+                this.SetParent(parent);
                 return true;
             }
         }
@@ -57,6 +53,14 @@ public class PlateBehaviour : MonoBehaviour, IPickableParentBehaviour, ICombinab
         }
 
         return false;
+    }
+
+    public override void DestroyItem()
+    {
+        ClearParent();
+        this.gameObject.SetActive(false);
+        food?.DestroyItem();
+        GameObject.FindFirstObjectByType<PlateDispenserBehaviour>().PlateRespawn(this);
     }
 
     public PickableItemBehaviour GetItem()

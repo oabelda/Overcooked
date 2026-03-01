@@ -6,10 +6,6 @@ public class PickableItemBehaviour : MonoBehaviour
     [SerializeField] new string name;
     [SerializeField] Sprite sprite;
 
-    public string GetName()
-    {
-        return name;
-    }
     public void SetParent(IPickableParentBehaviour parent)
     {
         if (this.parent == parent)
@@ -48,7 +44,7 @@ public class PickableItemBehaviour : MonoBehaviour
         return parent;
     }
 
-    public void DestroyItem()
+    public virtual void DestroyItem()
     {
         ClearParent();
         Destroy(this.gameObject);

@@ -29,7 +29,7 @@ public class DifficultySystem : MonoBehaviour
     [Range(0.1f, 5f)]
     public float momentumSpeed = 1.0f;
 
-    [SerializeField] OrderSystem orderGenerator;
+    // [SerializeField] OrderSystem orderGenerator;
 
     public List<PlayerMetrics> players;
 
@@ -324,16 +324,16 @@ public class DifficultySystem : MonoBehaviour
     //    funPressureIndex = Mathf.Clamp(funPressureIndex, 0, 100);
     //}
 
-    void HandleOverloadedPlayer(int playerId)
-    {
-        orderGenerator.IncreaseParallelRecipes();
-        orderGenerator.ReduceCriticalDependencies();
-    }
+    //void HandleOverloadedPlayer(int playerId)
+    //{
+    //    orderGenerator.IncreaseParallelRecipes();
+    //    orderGenerator.ReduceCriticalDependencies();
+    //}
 
-    void HandleUnderloadedPlayer(int playerId)
-    {
-        orderGenerator.SpawnAssistTasksNear(playerId);
-    }
+    //void HandleUnderloadedPlayer(int playerId)
+    //{
+    //    orderGenerator.SpawnAssistTasksNear(playerId);
+    //}
 }
 
 [System.Serializable]
